@@ -738,7 +738,7 @@ alias kcheck='klist'
 **For Command Help:**
 - Manual pages: `man command_name`
 - Command help: `command_name --help`
-- Ask Claude: Run `claude` and ask for command syntax
+- Ask AI assistant: Run `llama` or `ai` and ask for command syntax
 - Online resources: https://man7.org/ (Linux man pages)
 
 **Remember:**

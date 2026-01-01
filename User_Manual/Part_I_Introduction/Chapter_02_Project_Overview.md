@@ -37,7 +37,7 @@
 
 3. **Operational Simplicity**
    - User-friendly dashboards
-   - AI assistant for guidance
+   - Local AI assistant for guidance
    - Automated routine tasks
    - Clear documentation
 
@@ -105,20 +105,21 @@
 
 ### AI Enhancement
 
-**Claude Code Integration:**
-- Interactive AI assistant
-- Documentation queries
-- Troubleshooting guidance
-- Code assistance
-- Policy interpretation
-- Available 24/7 via command line
+**Local AI Assistant (Code Llama):**
+- Air-gapped Mac Mini M4 server (192.168.1.7)
+- Open-source Code Llama language model
+- No internet connectivity (NIST 800-171 compliant)
+- Interactive CLI tools and web interface
+- Available 24/7 on local network
+- Human-in-the-loop workflow
 
 **AI Capabilities:**
 - Natural language system queries
-- Automated documentation generation
-- Compliance control mapping
-- Security configuration assistance
 - Log analysis and pattern recognition
+- Security alert interpretation
+- Troubleshooting assistance
+- Configuration guidance
+- Command syntax help
 
 ### Data Protection
 
@@ -161,7 +162,7 @@
 
 ### Infrastructure Deployment
 
-**6 Production Systems:**
+**7 Production Systems:**
 1. **dc1.cyberinabox.net** - Domain Controller
    - FreeIPA identity management
    - DNS and DHCP services
@@ -192,6 +193,12 @@
    - SIEM platform
    - Security analytics
    - Compliance dashboards
+
+7. **Mac Mini M4 (192.168.1.7)** - AI Assistant Server
+   - Code Llama language model
+   - Ollama inference service
+   - AnythingLLM web interface
+   - Air-gapped (no internet access)
 
 ### Monitoring Deployment
 
@@ -269,7 +276,7 @@
 - Single sign-on (SSO) across services
 - Self-service password reset
 - Clear documentation
-- AI assistant for help
+- Local AI assistant for help
 - Intuitive dashboards
 
 **Productivity:**
@@ -292,7 +299,7 @@
 - Centralized user management (FreeIPA)
 - Automated provisioning
 - Unified monitoring dashboards
-- AI-assisted troubleshooting
+- Local AI-assisted troubleshooting
 - Comprehensive documentation
 
 **Visibility:**
@@ -311,7 +318,7 @@
 
 **Support:**
 - Detailed operational procedures
-- AI assistant (Claude Code)
+- Local AI assistant (Code Llama)
 - Troubleshooting guides
 - Quick reference cards
 - Active documentation
@@ -324,7 +331,7 @@
 |--------|-------|
 | **POA&M Completion** | 100% (29/29 items) |
 | **NIST 800-171 Controls** | 110/110 implemented |
-| **Systems Deployed** | 6 production servers |
+| **Systems Deployed** | 7 production servers |
 | **Monitoring Targets** | 7 active (100% UP) |
 | **Security Dashboards** | 6 operational |
 | **Documentation Files** | 150+ consolidated |
@@ -332,6 +339,59 @@
 | **Security Alerts** | 502 detected, 0 incidents |
 | **Malware Detections** | 0 (clean environment) |
 | **Phase I Duration** | 6 months (Jul-Dec 2025) |
+
+---
+
+## 2.6 Development Tools vs. Production Systems
+
+This manual documents the **production environment** of the CyberHygiene Production Network. It is important to understand the distinction between development tools and production systems:
+
+### Production AI System
+
+**Mac Mini M4 with Code Llama:**
+- **Purpose:** Operational AI assistant for production use
+- **Location:** 192.168.1.7 (local network only)
+- **Model:** Open-source Code Llama via Ollama
+- **Connectivity:** Air-gapped, no internet access
+- **Compliance:** NIST 800-171 compliant
+- **Availability:** 24/7 for administrators and authorized users
+- **Documentation:** See Chapter 15 for complete usage guide
+
+### Development Tools (Not Part of Production)
+
+**Claude Code:**
+- **Purpose:** Development and documentation creation tool only
+- **Usage Period:** Phase I development (Jul-Dec 2025)
+- **Status:** Will be disabled when system enters production
+- **Reason for Exclusion:** Requires internet connectivity to Anthropic's servers (not FedRAMP approved)
+- **Security Concern:** Cannot be used with CUI/FCI data
+- **Note:** Claude Code was instrumental in creating this documentation and developing the system architecture, but is not part of the operational environment
+
+**Other Development Tools:**
+- Traditional IDEs, code editors, and development utilities
+- Used only during system development and maintenance
+- Never connected to production CUI/FCI data
+- Disabled or isolated when system is operational
+
+### Why This Distinction Matters
+
+**Compliance Requirements:**
+NIST 800-171 requires that all systems processing, storing, or transmitting CUI must meet strict security controls. Internet-connected AI systems like Claude Code cannot meet these requirements because they:
+- Transmit data to external servers
+- Operate outside the security boundary
+- Are not FedRAMP authorized
+- Cannot provide air-gapped operation
+
+**Operational Security:**
+The production AI system (Code Llama on Mac Mini M4) was specifically designed to:
+- Operate completely air-gapped
+- Process queries without internet connectivity
+- Maintain human-in-the-loop control
+- Provide audit trails for administrative actions
+- Meet all NIST 800-171 security controls
+
+**Documentation Note:**
+Throughout this manual, references to "AI assistant" or "AI system" refer to the **production Code Llama system** unless specifically noted otherwise. Any historical references to development tools have been updated or clarified.
 
 ---
 
