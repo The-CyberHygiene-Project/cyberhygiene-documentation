@@ -76,7 +76,7 @@
 
 ### Chapter 10: Getting Help & Support
 - 10.1 Help Resources
-- 10.2 AI Assistant (Claude Code)
+- 10.2 AI Assistant (Code Llama)
 - 10.3 Documentation Portal
 - 10.4 Reporting Issues
 - 10.5 Support Procedures
@@ -113,12 +113,14 @@
 - 14.4 Service Catalog
 - 14.5 Custom Applications
 
-### Chapter 15: Working with AI Assistant
-- 15.1 Claude Code Overview
-- 15.2 Common AI Tasks
-- 15.3 Code Assistance
-- 15.4 Documentation Queries
-- 15.5 Best Practices
+### Chapter 15: AI Assistant (Local Code Llama)
+- 15.1 AI Assistant Overview
+- 15.2 Using the Interactive AI (llama / ai)
+- 15.3 Quick Query Commands
+- 15.4 AnythingLLM Web Interface
+- 15.5 Security and Compliance
+- 15.6 Best Practices
+- 15.7 Troubleshooting
 
 ---
 

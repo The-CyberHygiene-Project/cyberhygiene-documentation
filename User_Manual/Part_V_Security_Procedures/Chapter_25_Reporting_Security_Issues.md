@@ -197,19 +197,20 @@ Priority: [Low/Medium/High/Critical - your assessment]
 For non-critical issues or to understand severity:
 
 ```bash
-# SSH to any system
-ssh username@dc1.cyberinabox.net
+# Run AI assistant
+llama
 
-# Start Claude Code
-claude
+# Or use quick query
+ask-ai "I received an email claiming to be from IT asking me to verify
+my password. It looks suspicious. Should I report this?"
 
-# Describe the issue
+# Describe the issue in interactive mode
 You: I received an email claiming to be from IT asking me to verify
      my password. It looks suspicious. Should I report this?
 
-Claude: [Provides assessment and reporting guidance]
+AI: [Provides assessment and reporting guidance]
 
-# Claude will help you:
+# The AI will help you:
 # - Assess severity
 # - Determine if it's a security issue
 # - Guide you on reporting
@@ -891,8 +892,8 @@ For CRITICAL issues, also call: [Emergency number - Chapter 5]
 
 **AI Assistant Help:**
 ```bash
-ssh username@dc1.cyberinabox.net
-claude
+# Run AI assistant
+llama
 
 "I received a suspicious email. Should I report this?"
 "I think I clicked a phishing link. What do I do?"
@@ -910,7 +911,7 @@ claude
 - Security Team: security@cyberinabox.net
 - Administrator: dshannon@cyberinabox.net
 - Emergency: See Chapter 5
-- AI Assistant: `claude` via SSH
+- AI Assistant: `llama` or `ai` command
 
 ---
 

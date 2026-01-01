@@ -661,4 +661,4 @@ sudo umount /mnt/shared
 - Cannot access share: Check Kerberos ticket (`klist`)
 - Permission denied: Contact admin for group membership
 - File recovery: Email dshannon@cyberinabox.net
-- Questions: Use Claude Code assistant
+- Questions: Use AI assistant (llama/ai command)

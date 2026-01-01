@@ -48,7 +48,7 @@ Reference materials and quick guides
 
 - See Part II, Chapter 10: Getting Help & Support
 - Contact: System Administrator
-- AI Assistant: Claude Code (integrated)
+- AI Assistant: Code Llama on Mac Mini M4 (llama/ai command)
 
 ---
 

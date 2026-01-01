@@ -708,4 +708,4 @@ Ctrl+Enter - Send message
 - Roundcube guide: Click "?" in webmail
 - Email client setup: Contact IT
 - Phishing concerns: security@cyberinabox.net
-- General questions: Use Claude Code assistant
+- General questions: Use AI assistant (llama/ai command)
