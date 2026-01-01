@@ -264,17 +264,18 @@ Available: 24/7 for critical incidents
 
 **AI Assistant (Quick Assessment):**
 ```bash
-# SSH to any system
-ssh username@dc1.cyberinabox.net
+# SSH to any system or run llama command
+llama
 
-# Start Claude Code
-claude
+# Or use quick query
+ask-ai "I'm seeing multiple failed login attempts from IP 203.0.113.45
+in the last 10 minutes. Is this normal?"
 
-# Describe the issue
+# Describe the issue in interactive mode
 You: I'm seeing multiple failed login attempts from IP 203.0.113.45
      in the last 10 minutes. Is this normal?
 
-Claude: [Provides analysis and next steps]
+AI: [Provides analysis and next steps]
 ```
 
 **Email Administrator:**
@@ -510,7 +511,7 @@ Appropriate For:
 - Password resets (self-service)
 
 Resources:
-- AI Assistant (Claude Code)
+- AI Assistant (Code Llama - llama/ai command)
 - User Manual (this document)
 - Dashboard quick reference
 - FreeIPA self-service portal
@@ -749,7 +750,7 @@ Examples:
 **Report Security Incident:**
 - **Email:** security@cyberinabox.net
 - **Phone:** [Emergency number - Chapter 5]
-- **AI:** `claude` via SSH for quick assessment
+- **AI:** `llama` or `ai` command for quick assessment
 
 **First Actions (Critical):**
 1. Note exact time
@@ -801,4 +802,4 @@ When in doubt, report it. False positives are better than missed incidents.
 - Security Team: security@cyberinabox.net
 - Administrator: dshannon@cyberinabox.net
 - Emergency: See Chapter 5
-- AI Assistant: Run `claude` via SSH
+- AI Assistant: Run `llama` or `ai` command

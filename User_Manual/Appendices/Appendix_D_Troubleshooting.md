@@ -646,16 +646,16 @@ Response Time: 15 minutes
 
 **Use AI Assistant:**
 ```bash
-# SSH to any system
-ssh username@dc1.cyberinabox.net
+# Run AI assistant
+llama
 
-# Start Claude Code
-claude
+# Or use quick query
+ask-ai "I'm getting 'Permission denied' when trying to access /mnt/shared"
 
-# Ask your question
+# Ask in interactive mode
 You: I'm getting "Permission denied" when trying to access /mnt/shared
 
-Claude: [Provides troubleshooting steps...]
+AI: [Provides troubleshooting steps...]
 ```
 
 ---
@@ -686,5 +686,5 @@ Claude: [Provides troubleshooting steps...]
 **For More Help:**
 - System Administrator: dshannon@cyberinabox.net
 - Security Team: security@cyberinabox.net
-- AI Assistant: Run `claude` via SSH
+- AI Assistant: Run `llama` or `ai` command
 - Emergency: See Chapter 5 for emergency contacts

@@ -699,7 +699,7 @@ Uptime: 99.95%
 - Alert investigation: Contact security team
 - False positive: Document and email security@cyberinabox.net
 - Blocked legitimate traffic: Request whitelist exception
-- Questions: Ask Claude Code or check Wazuh dashboard
+- Questions: Ask AI assistant (llama/ai command) or check Wazuh dashboard
 
 **External Resources:**
 - Suricata Documentation: https://docs.suricata.io/

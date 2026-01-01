@@ -4,7 +4,7 @@
 
 ### Network Overview
 
-The CyberHygiene Production Network consists of 6 production servers deployed in a secure, segmented architecture:
+The CyberHygiene Production Network consists of 7 production servers deployed in a secure, segmented architecture:
 
 ```
 Internet
@@ -30,7 +30,10 @@ Internet
            |   Prometheus, Grafana, Alerting
            |
            +-- wazuh.cyberinabox.net (192.168.1.60)
-               SIEM, Security Monitoring, Compliance
+           |   SIEM, Security Monitoring, Compliance
+           |
+           +-- Mac Mini M4 (192.168.1.7)
+               AI Assistant, Code Llama, AnythingLLM (Air-gapped)
 ```
 
 ### Network Segmentation
@@ -216,6 +219,42 @@ Internet
 - Rootkit detection
 - Vulnerability scanning
 - Compliance checks (NIST 800-171)
+
+### 7. AI Assistant Server (Mac Mini M4)
+
+**Primary Functions:**
+- Local AI assistant (Code Llama)
+- Natural language query processing
+- Log analysis assistance
+- Troubleshooting guidance
+- Security alert interpretation
+- Configuration help
+
+**Key Services:**
+- Ollama: AI inference engine
+- Code Llama: Open-source language model
+- AnythingLLM: Web-based UI
+- Custom CLI tools: llama, ai, ask-ai, ai-analyze-wazuh
+
+**Specifications:**
+- Hardware: Mac Mini M4
+- CPU: Apple Silicon M4
+- Memory: 16 GB RAM
+- Storage: 512 GB SSD
+- Network: 1 Gbps (local network only)
+
+**Security Configuration:**
+- Air-gapped (no internet connectivity)
+- Local network access only (192.168.1.0/24)
+- No access to CUI/FCI data
+- Human-in-the-loop workflow required
+- NIST 800-171 compliant architecture
+
+**Available Models:**
+- Code Llama 7B (default)
+- Code Llama 13B (available)
+- Code Llama 34B (available)
+- Model selection based on query complexity
 
 ## 3.3 Security Infrastructure
 
@@ -459,18 +498,24 @@ User Login Attempt
 
 ### AI Assistant Integration
 
-**Claude Code Features:**
-- Documentation queries
-- Troubleshooting assistance
-- Code generation
-- Policy interpretation
-- Log analysis
-- Configuration guidance
+**Code Llama Features:**
+- Documentation queries via natural language
+- Troubleshooting assistance and diagnostics
+- Configuration syntax help
+- Security alert interpretation
+- Log analysis and pattern recognition
+- Command examples and guidance
 
 **Access Methods:**
-- Command line (SSH)
-- Web interface (planned)
-- API (future enhancement)
+- Command line tools: `llama`, `ai`, `ask-ai`
+- Specialized tools: `ai-analyze-wazuh`, `ai-analyze-logs`, `ai-troubleshoot`
+- Web interface: AnythingLLM (http://192.168.1.7:3001)
+
+**Architecture:**
+- Air-gapped deployment (no internet required)
+- Human-in-the-loop workflow (AI suggests, humans execute)
+- No direct system access (read-only queries only)
+- Compliant with NIST 800-171 requirements
 
 ---
 
@@ -484,6 +529,7 @@ User Login Attempt
 | Web Proxy | proxy.cyberinabox.net | 192.168.1.40 | Proxy, IDS/IPS |
 | Monitoring | monitoring.cyberinabox.net | 192.168.1.50 | Metrics, Dashboards |
 | Security | wazuh.cyberinabox.net | 192.168.1.60 | SIEM, Compliance |
+| AI Assistant | Mac Mini M4 | 192.168.1.7 | AI Support (Air-gapped) |
 
 ---
 

@@ -180,14 +180,14 @@ Human-readable data serialization format commonly used for configuration files.
 
 ## CyberHygiene-Specific Terms
 
-**Claude Code**
-AI assistant integrated into CyberHygiene network for help, guidance, and troubleshooting.
+**Code Llama**
+Local AI assistant running on Mac Mini M4 (192.168.1.7) for help, guidance, troubleshooting, and security alert analysis. Air-gapped and NIST 800-171 compliant. Access via llama/ai commands or web interface.
 
 **CPM Dashboard**
 CyberHygiene Project Management dashboard providing system overview and compliance status.
 
 **CyberHygiene Production Network**
-The complete NIST 800-171 compliant infrastructure consisting of 6 servers and associated services.
+The complete NIST 800-171 compliant infrastructure consisting of 7 servers and associated services.
 
 **FreeIPA**
 Identity management solution providing centralized authentication, authorization, and user management for CyberHygiene.
@@ -406,5 +406,5 @@ less Appendix_A_Glossary.md
 
 **For More Detailed Information:**
 - See relevant chapters in User Manual
-- Ask Claude Code: `claude`
+- Ask AI assistant: `llama` or `ai` command
 - Contact support: dshannon@cyberinabox.net

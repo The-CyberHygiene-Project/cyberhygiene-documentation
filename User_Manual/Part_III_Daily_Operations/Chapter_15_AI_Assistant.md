@@ -1,713 +1,875 @@
-# Chapter 15: Working with AI Assistant
+# Chapter 15: AI Assistant (Local Code Llama)
 
-## 15.1 Claude Code Overview
+## 15.1 AI Assistant Overview
 
-### What is Claude Code?
+### What is the AI Assistant?
 
-**Claude Code** is an AI assistant developed by Anthropic and integrated into the CyberHygiene Production Network to provide 24/7 support, guidance, and assistance to users and administrators.
+The CyberHygiene Production Network includes a **local AI assistant** powered by Code Llama running on a dedicated Mac Mini M4. This AI provides 24/7 support, guidance, and assistance to users and administrators without requiring internet connectivity.
 
-**Key Capabilities:**
-- Answer questions about system usage
-- Explain documentation and procedures
-- Troubleshoot common issues
-- Provide command syntax and examples
-- Generate code snippets and scripts
-- Analyze log files and error messages
-- Guide security best practices
+**Key Features:**
+- **Air-Gapped Security**: Runs entirely on local network (192.168.1.7)
+- **NIST 800-171 Compliant**: No CUI data sent to external servers
+- **Human-in-the-Loop**: AI provides recommendations; humans execute commands
+- **Comprehensive Audit Trail**: All interactions and actions logged
+- **No Internet Required**: Fully operational in offline environment
 
-**How It Works:**
-- Large Language Model (LLM) trained on vast knowledge
-- Context-aware (understands CyberHygiene environment)
-- Access to system documentation
-- Provides explanations in plain language
-- Can understand and generate code
-
-**What Makes It Special:**
-- Available 24/7 (no waiting for business hours)
-- Patient and non-judgmental
-- Can explain complex topics simply
-- Remembers context within conversation
-- Provides step-by-step guidance
-
-### Integration with CyberHygiene
-
-**Claude Code Knows About:**
-- ✅ CyberHygiene system architecture
-- ✅ All 6 production servers
-- ✅ NIST 800-171 compliance requirements
-- ✅ FreeIPA, Kerberos, and authentication
-- ✅ Monitoring systems (Prometheus, Grafana, Wazuh)
-- ✅ Security tools (Suricata, YARA, ClamAV)
-- ✅ This User Manual and all documentation
-- ✅ Common troubleshooting procedures
-
-**Claude Code Does NOT:**
-- ❌ Execute commands directly (security restriction)
-- ❌ Access your files or data
-- ❌ Make system changes
-- ❌ Store conversations permanently
-- ❌ Share information between users
-
-**Privacy:**
-- Conversations are ephemeral (not stored long-term)
-- Don't share sensitive data (passwords, keys, CUI)
-- Use for learning and guidance, not data processing
-
-## 15.2 Common AI Tasks
-
-### Getting System Information
-
-**Question:** "What servers are in the CyberHygiene network?"
-
-**Claude Response:**
+**Hardware:**
 ```
-The CyberHygiene Production Network consists of 6 servers:
-
-1. dc1.cyberinabox.net (192.168.1.10)
-   - Domain Controller
-   - FreeIPA, Kerberos, DNS, CA
-   - Rocky Linux 9.5 (FIPS mode)
-
-2. dms.cyberinabox.net (192.168.1.20)
-   - Document Management Server
-   - File sharing (Samba/NFS)
-   - Backup repository
-
-3. graylog.cyberinabox.net (192.168.1.30)
-   - Log Management
-   - Centralized logging with Elasticsearch
-
-4. proxy.cyberinabox.net (192.168.1.40)
-   - Web Proxy
-   - Suricata IDS/IPS
-   - Content filtering
-
-5. monitoring.cyberinabox.net (192.168.1.50)
-   - Prometheus metrics collection
-   - Grafana dashboards
-   - Alert management
-
-6. wazuh.cyberinabox.net (192.168.1.60)
-   - SIEM (Security Information and Event Management)
-   - Security monitoring and compliance
-
-All systems run Rocky Linux 9.5 with FIPS 140-2 mode enabled.
+System: Mac Mini M4
+IP Address: 192.168.1.7
+RAM: 16GB (supports Code Llama 7B)
+Purpose: Dedicated AI inference server
+Network: Air-gapped (local network only, no internet)
 ```
 
-### Understanding Error Messages
-
-**Question:** "I got this error: 'Permission denied (publickey,gssapi-keyex,gssapi-with-mic)'. What does it mean?"
-
-**Claude Response:**
+**Software Stack:**
 ```
-This SSH authentication error means the server requires public key or
-Kerberos authentication, but neither succeeded.
+Ollama Service:
+  Port: 11434
+  Models: Code Llama 7B (default), 13B, 34B available
+  Purpose: AI model inference engine
 
-Common causes:
-1. SSH key not uploaded to FreeIPA
-2. No valid Kerberos ticket
-3. Wrong username
-4. Account disabled
+AnythingLLM:
+  Interface: Web-based UI
+  Features: Workspaces, document analysis, chat interface
 
-Solutions:
-1. Check for Kerberos ticket:
-   klist
-
-2. Get a new ticket if expired:
-   kinit your_username
-
-3. Upload SSH key to FreeIPA:
-   - Login to https://dc1.cyberinabox.net
-   - Navigate to your user profile
-   - Add SSH public key
-
-4. Try password authentication as fallback:
-   ssh -o PreferredAuthentications=password username@host
-
-If none of these work, contact the system administrator.
+CLI Tools:
+  - llama / ai: Interactive chat
+  - ask-ai: Quick queries
+  - ai-analyze-wazuh: Security alert analysis
+  - ai-analyze-logs: Log file analysis
+  - ai-troubleshoot: Problem diagnosis
 ```
 
-### Learning Commands
+### How It Works
 
-**Question:** "How do I check how much disk space is left on a server?"
-
-**Claude Response:**
+**Architecture:**
 ```
-To check disk space, use the 'df' command:
+┌─────────────────────────────────────────────────────┐
+│  Mac Mini M4 (192.168.1.7) - AI Server              │
+│  ┌────────────────────────────────────────────┐     │
+│  │ Ollama Service (Port 11434)                │     │
+│  │ - Code Llama 7B                            │     │
+│  │ - AnythingLLM UI                           │     │
+│  │ - Air-gapped (no CUI access)               │     │
+│  └────────────────────────────────────────────┘     │
+└────────────────┬────────────────────────────────────┘
+                 │ HTTP API (local network only)
+                 ▼
+┌─────────────────────────────────────────────────────┐
+│  Admin Workstations (dc1, etc.)                     │
+│  ┌────────────────────────────────────────────┐     │
+│  │ AI Integration Scripts                     │     │
+│  │ - ask-ai (general queries)                 │     │
+│  │ - ai-analyze-wazuh (alert analysis)        │     │
+│  │ - ai-analyze-logs (log review)             │     │
+│  │ - ai-troubleshoot (problem solving)        │     │
+│  └────────────────────────────────────────────┘     │
+│                                                      │
+│  System Administrator                               │
+│  - Reviews AI recommendations                       │
+│  - Manually executes validated commands             │
+│  - All actions logged for audit                     │
+└─────────────────────────────────────────────────────┘
 
-df -h
-
-Explanation:
-- df: "disk free" command
-- -h: "human readable" format (shows GB instead of bytes)
-
-Output will look like:
-Filesystem      Size  Used Avail Use% Mounted on
-/dev/sda1       500G  180G  320G  36% /
-/dev/sdb1       2.0T  750G  1.3T  37% /datastore
-
-Columns explained:
-- Filesystem: Device name
-- Size: Total capacity
-- Used: How much is used
-- Avail: How much is free
-- Use%: Percentage used
-- Mounted on: Where it's mounted
-
-For specific directory usage:
-du -sh /path/to/directory
-
-For interactive disk usage viewer:
-ncdu /path/to/directory
-```
-
-### Security Best Practices
-
-**Question:** "What should I do if I receive a suspicious email?"
-
-**Claude Response:**
-```
-If you receive a suspicious email, follow these steps:
-
-1. DO NOT:
-   - Click any links
-   - Open attachments
-   - Reply to the email
-   - Forward to personal account
-
-2. LOOK FOR WARNING SIGNS:
-   - Unexpected sender
-   - Requests for credentials
-   - Urgent or threatening language
-   - Misspellings or poor grammar
-   - Generic greetings ("Dear user")
-   - Suspicious links (hover to check)
-
-3. VERIFY:
-   - Contact sender through known channel
-   - Check email headers (look for spoofing)
-   - Verify sender domain is legitimate
-
-4. REPORT:
-   Email: security@cyberinabox.net
-   Subject: [SECURITY] Suspicious Email
-   Action: Forward as attachment (don't just forward)
-
-5. DELETE:
-   After reporting, delete the email
-   Empty trash folder
-
-The security team will:
-- Analyze the email
-- Block sender if malicious
-- Alert other users if needed
-- Update email filters
-
-For more details, see Chapter 25: Reporting Security Issues.
+✅ NIST 800-171 Compliant: AI has no direct CUI access
+✅ Human-in-the-Loop: All commands executed manually
+✅ Audit Trail: All actions logged on admin workstation
 ```
 
-### Troubleshooting Workflows
+### What the AI Can Help With
 
-**Question:** "I can't access the Grafana dashboard. Where should I start?"
+**System Administration:**
+- Command syntax and examples
+- Troubleshooting procedures
+- Configuration guidance
+- Best practices recommendations
+- Error message interpretation
 
-**Claude Response:**
-```
-Let's troubleshoot step by step:
+**Security Analysis:**
+- Wazuh alert analysis and recommendations
+- Log file pattern analysis
+- Security best practice guidance
+- Incident response suggestions
+- Compliance requirement explanations
 
-Step 1: Can you reach the server?
-ping grafana.cyberinabox.net
+**Documentation:**
+- Explain system procedures
+- Guide through User Manual topics
+- Clarify technical concepts
+- Provide step-by-step instructions
 
-If ping fails:
-- Network issue or server down
-- Contact administrator immediately
+**What the AI Does NOT Do:**
+- ❌ Execute commands directly (human must execute)
+- ❌ Access CUI or sensitive data directly
+- ❌ Make system changes autonomously
+- ❌ Require internet connectivity
+- ❌ Send data to external servers
 
-If ping succeeds, continue to Step 2.
+## 15.2 Using the Interactive AI (llama / ai)
 
-Step 2: Is the service listening?
-telnet grafana.cyberinabox.net 3001
-# Or
-nc -zv grafana.cyberinabox.net 3001
+### Starting an Interactive Session
 
-If connection refused:
-- Grafana service might be down
-- Check with administrator
-
-If connection succeeds, continue to Step 3.
-
-Step 3: Try accessing in browser
-https://grafana.cyberinabox.net
-
-What error do you see?
-- "Connection timed out" → Firewall or network issue
-- "Connection refused" → Service not running
-- "Certificate error" → Certificate problem
-- "403 Forbidden" → Authentication/authorization issue
-- Login page loads → Your credentials might be wrong
-
-Step 4: Check your authentication
-- Valid username/password?
-- Kerberos ticket valid? (run: klist)
-- Account locked? (check with admin)
-
-Step 5: Try different browser
-- Clear cache and cookies
-- Try incognito mode
-- Try different browser (Chrome vs Firefox)
-
-Still not working? Contact support with:
-- Exact error message
-- Steps you've tried
-- Browser and version
-- Screenshot of error
-```
-
-## 15.3 Code Assistance
-
-### Bash Script Examples
-
-**Question:** "Can you write a script to backup a directory?"
-
-**Claude Response:**
+**Command:**
 ```bash
-Here's a backup script with error checking:
+# Start interactive AI session
+llama
 
+# Or use shorter alias
+ai
+
+# Or full name
+codellama
+```
+
+**Interface:**
+```
+╔═══════════════════════════════════════════════════════════╗
+║                                                           ║
+║   🦙 Interactive Code Llama CLI                           ║
+║   Local AI Assistant for System Administration           ║
+║                                                           ║
+╚═══════════════════════════════════════════════════════════╝
+
+Server: http://192.168.1.7:11434
+Model:  codellama:7b
+Type /help for commands or /exit to quit
+
+You > [your question here]
+
+Assistant >
+[AI response]
+```
+
+### Basic Interaction Examples
+
+**Example 1: Simple Question**
+```bash
+$ llama
+
+You > How do I check disk space on Linux?
+
+Assistant >
+To check disk space on Linux, use the `df` command:
+
+df -h          # Human-readable format
+df -h /var     # Check specific partition
+du -sh *       # Show size of current directory contents
+du -h --max-depth=1 /var/log  # Show sizes one level deep
+
+The `-h` flag shows sizes in human-readable format (GB, MB, etc.)
+
+You > Thank you!
+
+Assistant >
+You're welcome! Let me know if you need help with anything else.
+
+You > /exit
+Goodbye! 👋
+```
+
+**Example 2: Multi-Turn Conversation**
+```bash
+You > What is the command to find large files?
+
+Assistant >
+Use the `find` command with size parameter:
+
+find /var -type f -size +100M -exec ls -lh {} \;
+
+This finds files larger than 100MB in /var directory.
+
+You > Can you explain each part of that command?
+
+Assistant >
+Sure! Breaking down the command:
+
+- `find /var`: Start searching in /var directory
+- `-type f`: Only find files (not directories)
+- `-size +100M`: Files larger than 100 megabytes
+- `-exec ls -lh {} \;`: Execute ls -lh on each file found
+  - `{}` is replaced with the filename
+  - `\;` marks the end of the -exec command
+
+You > Perfect, thank you!
+```
+
+### Interactive Commands
+
+**Within a Session:**
+```
+| Command | Description |
+|---------|-------------|
+| /help or /h | Show help message |
+| /exit or /quit | Exit the program |
+| /clear | Clear conversation history |
+| /history | Show full conversation history |
+| /model [name] | Switch to different model |
+| /system [prompt] | Change AI personality/focus |
+| /multiline | Enter multiline input mode |
+```
+
+**Keyboard Shortcuts:**
+```
+| Shortcut | Action |
+|----------|--------|
+| Ctrl+C | Cancel current input |
+| Ctrl+D | Exit (when input is empty) |
+| ↑ / ↓ | Navigate command history |
+```
+
+### Specialized System Prompts
+
+**Security Expert Mode:**
+```bash
+You > /system You are a security expert focused on NIST 800-171 compliance. Provide security-focused recommendations.
+
+✓ System prompt updated
+
+You > How should I configure SSH for CUI systems?
+
+Assistant >
+For NIST 800-171 compliant SSH configuration:
+
+1. Strong encryption (FIPS 140-2):
+   Ciphers aes256-gcm@openssh.com,aes256-ctr
+   MACs hmac-sha2-256,hmac-sha2-512
+
+2. Authentication:
+   - Disable password auth (PasswordAuthentication no)
+   - Require key-based auth
+   - Consider multi-factor with FreeIPA OTP
+
+3. Access control:
+   - AllowUsers or AllowGroups for authorized users only
+   - DenyUsers for specific account blocks
+
+4. Session management:
+   - ClientAliveInterval 300 (session timeout)
+   - MaxAuthTries 3
+   - LoginGraceTime 60
+
+5. Logging:
+   - LogLevel VERBOSE for audit trail
+   - Send logs to centralized SIEM (Wazuh)
+
+This satisfies AC-17, SC-8, SC-13, and AU-2 controls.
+```
+
+## 15.3 Quick Query Commands
+
+### ask-ai: One-Shot Questions
+
+**Usage:**
+```bash
+# Simple syntax
+ask-ai "your question here"
+
+# Examples
+ask-ai "How do I restart Apache?"
+ask-ai "What's the command to check memory usage?"
+ask-ai "How do I add a user to a group in FreeIPA?"
+```
+
+**Example Output:**
+```bash
+$ ask-ai "How do I check failed SSH login attempts?"
+
+To check failed SSH login attempts, use:
+
+# View recent failed SSH attempts
+grep "Failed password" /var/log/secure | tail -20
+
+# Count failures by IP address
+grep "Failed password" /var/log/secure | \
+  awk '{print $(NF-3)}' | sort | uniq -c | sort -rn
+
+# Check last 100 failed attempts with details
+ausearch -m USER_LOGIN -sv no -i | tail -100
+
+# For real-time monitoring
+tail -f /var/log/secure | grep "Failed"
+
+These logs are also centralized in Graylog for easier analysis.
+```
+
+### ai-analyze-wazuh: Security Alert Analysis
+
+**Usage:**
+```bash
+# Analyze last 10 Wazuh alerts (default)
+ai-analyze-wazuh
+
+# Analyze specific number of alerts
+ai-analyze-wazuh 20
+
+# Analyze alerts from specific time period
+ai-analyze-wazuh 50
+```
+
+**Example:**
+```bash
+$ ai-analyze-wazuh 20
+
+Analyzing last 20 Wazuh alerts...
+
+========================================
+WAZUH ALERT ANALYSIS
+========================================
+
+SUMMARY:
+  Total alerts analyzed: 20
+  Critical (Level 12+): 2
+  High (Level 10-11): 5
+  Medium (Level 7-9): 11
+  Low (Level 1-6): 2
+
+TOP ISSUES:
+1. Multiple failed SSH attempts from 203.0.113.15
+   - 8 occurrences in last hour
+   - Recommendation: Block IP address via firewalld
+   - Command: firewall-cmd --permanent --add-rich-rule='rule family="ipv4" source address="203.0.113.15" reject'
+
+2. Elevated privilege usage (sudo)
+   - User: jsmith
+   - 12 sudo commands in last 30 minutes
+   - Recommendation: Review if activity is expected
+
+3. File integrity change detected
+   - File: /etc/passwd
+   - Change: User account modification
+   - Status: Normal (account creation by admin)
+
+RECOMMENDED ACTIONS:
+☐ Block suspicious IP: 203.0.113.15
+☐ Review jsmith's recent sudo activity
+☐ Verify /etc/passwd changes are authorized
+
+Would you like detailed analysis of any specific alert?
+```
+
+### ai-analyze-logs: Log File Analysis
+
+**Usage:**
+```bash
+# Analyze /var/log/messages (default)
+ai-analyze-logs
+
+# Analyze specific log file
+ai-analyze-logs /var/log/secure 100
+
+# Analyze audit logs
+ai-analyze-logs /var/log/audit/audit.log 50
+```
+
+**Example:**
+```bash
+$ ai-analyze-logs /var/log/secure 100
+
+Analyzing last 100 lines of /var/log/secure...
+
+========================================
+SECURITY LOG ANALYSIS
+========================================
+
+AUTHENTICATION SUMMARY:
+  Successful logins: 45
+  Failed logins: 12
+  Sudo executions: 23
+  SSH sessions: 18
+
+NOTABLE EVENTS:
+1. Failed Login Pattern (Priority: HIGH)
+   - User: root
+   - Source: 198.51.100.42
+   - Count: 8 attempts in 5 minutes
+   - Time: 14:25-14:30
+   - Recommendation: Investigate source IP, consider blocking
+
+2. Unusual Time Login (Priority: MEDIUM)
+   - User: dshannon
+   - Time: 03:42 AM
+   - Source: 192.168.1.50
+   - Status: Successful
+   - Note: Late night access (normal for admin?)
+
+3. Service Account Activity (Priority: LOW)
+   - User: wazuh
+   - Activity: Normal service operations
+   - Status: Expected
+
+RECOMMENDATIONS:
+1. Block 198.51.100.42 if not authorized
+2. Verify dshannon's 3AM login was legitimate
+3. Continue monitoring patterns
+
+No immediate security concerns detected.
+```
+
+### ai-troubleshoot: Interactive Problem Solving
+
+**Usage:**
+```bash
+# Describe your problem
+ai-troubleshoot "high CPU usage on wazuh-manager"
+ai-troubleshoot "disk space running low on /var"
+ai-troubleshoot "slow DNS resolution"
+```
+
+**Example:**
+```bash
+$ ai-troubleshoot "httpd service fails to start"
+
+Analyzing problem: "httpd service fails to start"
+
+DIAGNOSTIC STEPS:
+================
+
+Step 1: Check service status
+--------------------------------------
+Run: systemctl status httpd
+Look for: Error messages, failed state
+
+Step 2: Check logs
+--------------------------------------
+Run: journalctl -u httpd -n 50
+Look for: Configuration errors, port conflicts
+
+Step 3: Test configuration
+--------------------------------------
+Run: apachectl configtest
+Look for: Syntax errors in config files
+
+Step 4: Check port availability
+--------------------------------------
+Run: netstat -tlnp | grep :80
+       netstat -tlnp | grep :443
+Look for: Other processes using ports 80/443
+
+COMMON CAUSES:
+--------------
+1. Configuration syntax error
+   Fix: Check /etc/httpd/conf/httpd.conf
+
+2. Port already in use
+   Fix: Stop conflicting service or change Apache ports
+
+3. SELinux denial
+   Fix: Check ausearch -m avc -ts recent
+
+4. Missing SSL certificates
+   Fix: Verify /etc/pki/tls/certs/ has required certs
+
+NEXT STEPS:
+-----------
+1. Run diagnostic commands above
+2. Share output if issue persists
+3. I can help interpret results
+
+Would you like me to explain any of these steps in detail?
+```
+
+## 15.4 AnythingLLM Web Interface
+
+### Accessing the Web Interface
+
+**URL:** http://192.168.1.7 (from Mac Mini M4)
+
+**Features:**
+- Visual chat interface
+- Document upload and analysis
+- Workspace organization
+- Conversation history
+- Copy-paste friendly
+
+**Workspaces:**
+```
+1. "Security Analysis"
+   Purpose: Wazuh alerts, log analysis, security issues
+
+2. "System Administration"
+   Purpose: General system tasks, troubleshooting
+
+3. "Troubleshooting"
+   Purpose: Problem diagnosis, error resolution
+
+4. "Compliance"
+   Purpose: NIST 800-171, policy questions
+```
+
+### Using AnythingLLM
+
+**Basic Workflow:**
+1. Open AnythingLLM on Mac Mini M4
+2. Select appropriate workspace
+3. Ask questions conversationally
+4. Copy useful commands to terminal
+5. Execute manually on admin workstation
+6. Document actions taken
+
+**Example Session:**
+```
+User: I'm getting high memory alerts on the Wazuh server.
+      How do I investigate?
+
+AI: Here's how to investigate high memory usage on Wazuh:
+
+    1. Check current memory usage:
+       free -h
+       top -o %MEM
+
+    2. Identify top memory consumers:
+       ps aux --sort=-%mem | head -20
+
+    3. Check Wazuh-specific processes:
+       ps aux | grep wazuh
+       systemctl status wazuh-manager
+
+    4. Review Wazuh logs:
+       tail -f /var/ossec/logs/ossec.log
+
+    5. Check for memory leaks:
+       cat /proc/$(pgrep wazuh-analysisd)/status | grep VmRSS
+
+    Would you like me to help interpret the output?
+```
+
+## 15.5 Security and Compliance
+
+### NIST 800-171 Compliance
+
+**How AI Maintains Compliance:**
+```
+✅ AC-3 (Access Enforcement):
+   - AI cannot access CUI data directly
+   - All data access through human administrators
+   - AI server outside CUI boundary (192.168.1.7)
+
+✅ AU-2 (Audit Events):
+   - Admin actions logged on DC1, not AI queries
+   - Full audit trail maintained
+   - AI queries not considered security-relevant events
+
+✅ IA-2 (Authentication):
+   - Human authenticates to workstation
+   - AI doesn't handle authentication
+   - No AI access to credentials
+
+✅ SC-7 (Boundary Protection):
+   - AI server physically separated
+   - No internet connectivity
+   - Local network only (192.168.1.0/24)
+
+✅ SC-13 (Cryptographic Protection):
+   - Workstations maintain FIPS mode
+   - AI server doesn't process CUI
+   - Encrypted connections between components
+```
+
+### Audit Trail
+
+**Logging AI-Assisted Actions:**
+```bash
+# All administrative actions should be logged
+# Log location: /var/log/ai-assisted-admin/actions.log
+
+# Example log entry
+2025-12-31_15:30:45 - User: dshannon - Query: "How to block IP 203.0.113.15" - Action: firewall-cmd --permanent --add-rich-rule='rule family="ipv4" source address="203.0.113.15" reject'
+```
+
+**Logging Script:**
+```bash
 #!/bin/bash
-# backup_directory.sh - Backup a directory to timestamped archive
+# log-ai-action.sh
+# Usage: log-ai-action.sh "query" "command executed"
 
-# Configuration
-SOURCE_DIR="$1"
-BACKUP_DIR="${2:-/datastore/backups}"
-TIMESTAMP=$(date +%Y%m%d_%H%M%S)
-BACKUP_NAME="backup_${TIMESTAMP}.tar.gz"
+LOG_DIR="/var/log/ai-assisted-admin"
+LOG_FILE="${LOG_DIR}/actions.log"
 
-# Check if source directory exists
-if [ ! -d "$SOURCE_DIR" ]; then
-    echo "Error: Source directory does not exist: $SOURCE_DIR"
-    exit 1
-fi
+mkdir -p "${LOG_DIR}"
 
-# Create backup directory if it doesn't exist
-mkdir -p "$BACKUP_DIR"
-
-# Create backup with progress
-echo "Starting backup of $SOURCE_DIR..."
-tar -czf "${BACKUP_DIR}/${BACKUP_NAME}" \
-    --exclude='*.tmp' \
-    --exclude='.cache' \
-    -C "$(dirname "$SOURCE_DIR")" \
-    "$(basename "$SOURCE_DIR")"
-
-# Check if backup succeeded
-if [ $? -eq 0 ]; then
-    echo "Backup completed successfully!"
-    echo "Location: ${BACKUP_DIR}/${BACKUP_NAME}"
-    echo "Size: $(du -h "${BACKUP_DIR}/${BACKUP_NAME}" | cut -f1)"
-else
-    echo "Backup failed!"
-    exit 1
-fi
-
-# Optional: Keep only last 7 backups
-cd "$BACKUP_DIR"
-ls -t backup_*.tar.gz | tail -n +8 | xargs -r rm
-
-echo "Old backups cleaned up. Kept last 7 backups."
+echo "$(date +%Y-%m-%d_%H:%M:%S) - User: $(whoami) - Query: $1 - Action: $2" >> "${LOG_FILE}"
 ```
 
-Usage:
+### Human-in-the-Loop Workflow
+
+**Required Process:**
+```
+1. Admin asks AI for recommendation
+   ↓
+2. AI provides suggested command/action
+   ↓
+3. Admin reviews recommendation
+   ↓
+4. Admin validates appropriateness
+   ↓
+5. Admin manually executes command
+   ↓
+6. Admin logs action for audit
+   ↓
+7. Admin verifies result
+```
+
+**Example:**
 ```bash
-chmod +x backup_directory.sh
-./backup_directory.sh /path/to/source /path/to/backups
+# Step 1: Ask AI
+ask-ai "How do I check for failed SSH logins from last hour?"
+
+# Step 2: AI provides command
+# grep "Failed password" /var/log/secure | grep "$(date +%b\ %d\ %H)"
+
+# Step 3-4: Admin reviews and validates
+# Command looks safe, appropriate for task
+
+# Step 5: Admin executes manually
+grep "Failed password" /var/log/secure | grep "$(date +%b\ %d\ %H)"
+
+# Step 6: Log action
+log-ai-action.sh "check failed SSH logins" "grep 'Failed password' /var/log/secure"
+
+# Step 7: Review output, take further action if needed
 ```
 
-### Python Script Examples
+## 15.6 Best Practices
 
-**Question:** "How do I parse a log file and extract error messages in Python?"
+### Effective AI Usage
 
-**Claude Response:**
-```python
-Here's a Python script to extract errors from log files:
+**Be Specific:**
+```
+❌ Vague: "How do I use firewall?"
+✅ Better: "How do I block port 22 from specific IP using firewalld?"
 
-#!/usr/bin/env python3
-"""
-log_parser.py - Extract error messages from log files
-"""
-
-import re
-import sys
-from datetime import datetime
-from collections import Counter
-
-def parse_log_file(filename, pattern='ERROR'):
-    """Parse log file and extract matching lines."""
-    errors = []
-
-    try:
-        with open(filename, 'r') as f:
-            for line_num, line in enumerate(f, 1):
-                if pattern in line:
-                    errors.append({
-                        'line_number': line_num,
-                        'timestamp': extract_timestamp(line),
-                        'message': line.strip()
-                    })
-    except FileNotFoundError:
-        print(f"Error: File not found: {filename}")
-        sys.exit(1)
-    except PermissionError:
-        print(f"Error: Permission denied: {filename}")
-        sys.exit(1)
-
-    return errors
-
-def extract_timestamp(line):
-    """Extract timestamp from log line."""
-    # Common log timestamp pattern
-    pattern = r'\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2}'
-    match = re.search(pattern, line)
-    return match.group(0) if match else "Unknown"
-
-def analyze_errors(errors):
-    """Analyze error patterns."""
-    if not errors:
-        print("No errors found!")
-        return
-
-    print(f"\n=== Found {len(errors)} errors ===\n")
-
-    # Show first 10 errors
-    for error in errors[:10]:
-        print(f"Line {error['line_number']} [{error['timestamp']}]:")
-        print(f"  {error['message']}\n")
-
-    if len(errors) > 10:
-        print(f"... and {len(errors) - 10} more errors\n")
-
-    # Count unique error messages
-    messages = [e['message'] for e in errors]
-    counts = Counter(messages)
-
-    print("=== Most common errors ===")
-    for msg, count in counts.most_common(5):
-        print(f"{count}x: {msg[:80]}...")
-
-if __name__ == '__main__':
-    if len(sys.argv) < 2:
-        print("Usage: python3 log_parser.py <logfile> [pattern]")
-        print("Example: python3 log_parser.py /var/log/messages ERROR")
-        sys.exit(1)
-
-    logfile = sys.argv[1]
-    pattern = sys.argv[2] if len(sys.argv) > 2 else 'ERROR'
-
-    errors = parse_log_file(logfile, pattern)
-    analyze_errors(errors)
+❌ Vague: "Email not working"
+✅ Better: "Postfix service running but mail not being delivered, where do I check for errors?"
 ```
 
-Usage:
+**Provide Context:**
+```
+Good Question:
+"I'm seeing high CPU usage on the wazuh-manager process.
+It's using 80% CPU consistently. How do I diagnose this?"
+
+Better Question:
+"The wazuh-manager process on wazuh.cyberinabox.net is using 80% CPU.
+This started after we added 2 new agents. How do I diagnose if this
+is normal increased load or a problem?"
+```
+
+**Use Multiline for Complex Issues:**
 ```bash
-python3 log_parser.py /var/log/messages ERROR
-python3 log_parser.py /var/log/secure "Failed password"
+You > /multiline
+
+Enter your message (press Ctrl+D when done):
+I'm getting this error when trying to restart httpd:
+
+Job for httpd.service failed because the control process exited
+with error code.
+See "systemctl status httpd.service" and "journalctl -xe" for details.
+
+The logs show:
+[ssl:warn] [pid 12345] AH01906: server.example.com:443:0 server certificate does not include an ID which matches the server name
+
+How do I fix this?
+[Press Ctrl+D]
 ```
 
-### SQL Query Examples
+### When to Use Each Tool
 
-**Question:** "How do I query the Wazuh database for failed login attempts?"
+**Interactive AI (llama):**
+- Complex problems requiring back-and-forth
+- Learning new concepts
+- Exploring multiple solutions
+- When you need detailed explanations
 
-**Claude Response:**
-```sql
--- Query Wazuh alerts for failed authentication attempts
--- (This is an example query - actual schema may vary)
+**Quick Queries (ask-ai):**
+- Simple command syntax questions
+- Quick fact lookups
+- When you know exactly what you need
+- One-off questions
 
--- Failed SSH login attempts in last 24 hours
-SELECT
-    timestamp,
-    agent_name,
-    data->>'srcip' as source_ip,
-    data->>'dstuser' as target_user,
-    rule_description
-FROM alert
-WHERE
-    rule_id IN ('5503', '5551', '5710')  -- SSH authentication failures
-    AND timestamp >= NOW() - INTERVAL '24 hours'
-ORDER BY timestamp DESC
-LIMIT 100;
+**Specialized Analysis:**
+- Wazuh alerts → `ai-analyze-wazuh`
+- Log files → `ai-analyze-logs`
+- Problems → `ai-troubleshoot`
 
--- Count failed attempts by source IP
-SELECT
-    data->>'srcip' as source_ip,
-    COUNT(*) as attempt_count,
-    MIN(timestamp) as first_attempt,
-    MAX(timestamp) as last_attempt
-FROM alert
-WHERE
-    rule_id = '5710'  -- Multiple auth failures
-    AND timestamp >= NOW() - INTERVAL '7 days'
-GROUP BY data->>'srcip'
-HAVING COUNT(*) > 5
-ORDER BY attempt_count DESC;
+**AnythingLLM Web UI:**
+- Analyzing documents or long text
+- When you prefer visual interface
+- Multiple related questions in sequence
+- Accessing from Mac Mini directly
 
--- Failed attempts by user
-SELECT
-    data->>'dstuser' as username,
-    COUNT(*) as failed_attempts,
-    COUNT(DISTINCT data->>'srcip') as unique_sources
-FROM alert
-WHERE
-    rule_description LIKE '%authentication failure%'
-    AND timestamp >= NOW() - INTERVAL '30 days'
-GROUP BY data->>'dstuser'
-ORDER BY failed_attempts DESC
-LIMIT 20;
+### Performance Expectations
+
+**Response Times:**
+```
+Code Llama 7B:  10-30 seconds (normal)
+Code Llama 13B: 20-60 seconds
+Code Llama 34B: 60-120 seconds (if available)
 ```
 
-Note: Access to Wazuh database requires appropriate permissions.
-Query the Wazuh dashboard interface instead if direct DB access unavailable.
-
-## 15.4 Documentation Queries
-
-### Finding Information in Manual
-
-**Question:** "Where can I find information about password requirements?"
-
-**Claude Response:**
+**Quality vs Speed:**
 ```
-Password requirements are documented in Chapter 7, Section 7.1:
-
-Location:
-/home/dshannon/Documents/User_Manual/Part_II_Getting_Started/Chapter_07_Password_Authentication.md
-
-Key requirements:
-- Minimum length: 15 characters
-- Complexity: 3 of 4 categories (upper, lower, numbers, symbols)
-- Expiration: 90 days
-- History: Cannot reuse last 24 passwords
-- No common patterns or personal info
-
-Quick access:
-less /home/dshannon/Documents/User_Manual/Part_II_Getting_Started/Chapter_07_Password_Authentication.md
-
-Or search all documentation:
-grep -r "password" /home/dshannon/Documents/User_Manual/
+7B Model:  Fastest, good for most tasks
+13B Model: Slower, better accuracy and reasoning
+34B Model: Slowest, highest quality (requires 32GB+ RAM)
 ```
 
-### Understanding Compliance Requirements
+## 15.7 Troubleshooting
 
-**Question:** "What does NIST 800-171 control AC.2.016 require?"
+### AI Server Not Responding
 
-**Claude Response:**
-```
-NIST 800-171 Control AC.2.016:
+**Check Connectivity:**
+```bash
+# Test network connection
+ping 192.168.1.7
 
-Control: "Control remote access sessions"
+# Test Ollama service
+curl http://192.168.1.7:11434/api/tags
 
-Requirements:
-1. Monitor all remote access sessions
-2. Limit session timeouts
-3. Require authentication for remote access
-4. Encrypt remote access connections
-5. Log remote access events
-
-CyberHygiene Implementation:
-- SSH for remote access (encrypted)
-- MFA required for privileged users
-- Session timeout: 15 minutes idle, 24 hours maximum
-- All sessions logged via auditd and Wazuh
-- Connection attempts from authorized networks only
-
-Evidence:
-- SSH configuration: /etc/ssh/sshd_config
-- Audit logs: /var/log/secure, Wazuh dashboard
-- MFA enrollment: FreeIPA records
-- Session monitoring: Grafana dashboards
-
-For complete details, see:
-- Chapter 4, Section 4.1 (Security Baseline)
-- Chapter 39 (NIST 800-171 Overview)
-- SSP documentation in Compliance folder
+# Expected response: JSON with model list
 ```
 
-### Procedure Explanations
+**Check Ollama Service:**
+```bash
+# SSH to Mac Mini (if you have access)
+ssh Admin@192.168.1.7
 
-**Question:** "Walk me through the incident response process"
+# Check if Ollama is running
+launchctl list | grep ollama
 
-**Claude Response:**
-```
-Incident Response Process (Overview):
+# View Ollama logs
+tail -f /tmp/ollama.log
 
-Phase 1: DETECTION
-- Automated alerts (Wazuh, Suricata, Prometheus)
-- User reports
-- Log analysis
-- Anomaly detection
-
-Phase 2: INITIAL ASSESSMENT (First 15 minutes)
-1. Determine severity (Low/Medium/High/Critical)
-2. Identify affected systems
-3. Assess ongoing threat
-4. Decide: contain now or investigate first?
-
-Phase 3: CONTAINMENT (Next 1-4 hours)
-- Isolate affected systems (firewall rules)
-- Disable compromised accounts
-- Block malicious IPs
-- Preserve evidence (snapshots, logs)
-
-Phase 4: INVESTIGATION (Parallel with containment)
-- Gather logs and forensic data
-- Timeline reconstruction
-- Scope assessment
-- Root cause analysis
-
-Phase 5: ERADICATION
-- Remove malware
-- Close security gaps
-- Patch vulnerabilities
-- Rebuild systems if needed
-
-Phase 6: RECOVERY
-- Restore from backups
-- Verify system integrity
-- Re-enable services gradually
-- Monitor for recurrence
-
-Phase 7: POST-INCIDENT
-- Document incident
-- Lessons learned meeting
-- Update procedures
-- Improve controls
-
-For detailed procedures, see Chapter 22: Incident Response.
-
-Critical contacts:
-- Security Team: security@cyberinabox.net
-- System Admin: dshannon@cyberinabox.net
-- Emergency: (See emergency contact card)
+# Restart Ollama
+launchctl unload ~/Library/LaunchAgents/com.ollama.server.plist
+launchctl load ~/Library/LaunchAgents/com.ollama.server.plist
 ```
 
-## 15.5 Best Practices
+### Slow Responses
 
-### Effective Communication with AI
+**Normal:**
+- 10-30 seconds for typical queries (Code Llama 7B)
+- Longer for complex analysis or code generation
 
-**DO:**
-- ✅ Be specific and clear
-- ✅ Provide context (what you're trying to do)
-- ✅ Include error messages (exact text)
-- ✅ Ask follow-up questions
-- ✅ Request examples or explanations
+**If Unusually Slow:**
+```bash
+# Check Mac Mini resources (from Mac Mini)
+top
+# Look for: CPU usage, memory usage
 
-**DON'T:**
-- ❌ Share passwords or sensitive data
-- ❌ Paste CUI or classified information
-- ❌ Assume AI can execute commands
-- ❌ Use AI as only source for critical decisions
-- ❌ Expect AI to remember across sessions
-
-### Example Conversations
-
-**Good Question:**
-```
-Me: I'm trying to mount the shared NFS export from dms.cyberinabox.net
-to my local /mnt/shared directory using Kerberos authentication. I
-ran "mount -t nfs dms:/exports/shared /mnt/shared" but got "access
-denied". I have a valid Kerberos ticket (checked with klist). What
-am I missing?
-
-Claude: [Provides specific answer about missing -o sec=krb5 option]
+# Close unnecessary applications on Mac Mini
+# Restart Ollama service if needed
 ```
 
-**Poor Question:**
+### Model Not Found Error
+
+**Check Available Models:**
+```bash
+# List models on server
+curl -s http://192.168.1.7:11434/api/tags | jq -r '.models[].name'
+
+# Expected output:
+# codellama:7b
+# (possibly codellama:13b, codellama:34b)
 ```
-Me: mount doesn't work
 
-Claude: [Has to ask many clarifying questions]
+**Re-download Model (from Mac Mini):**
+```bash
+# SSH to Mac Mini
+ssh Admin@192.168.1.7
+
+# Pull model again
+ollama pull codellama:7b
+
+# Takes 10-20 minutes (4GB download)
 ```
 
-### When to Use AI vs. Human Support
+### Command Not Found
 
-**Use AI For:**
-- ✅ Quick questions
-- ✅ Command syntax
-- ✅ Understanding concepts
-- ✅ Finding documentation
-- ✅ Learning new tools
-- ✅ Non-urgent troubleshooting
+**Install AI Tools (if missing):**
+```bash
+# Tools should be in /usr/local/bin/
+ls -la /usr/local/bin/ask-ai
+ls -la /usr/local/bin/ai-*
 
-**Use Human Support For:**
-- ⚠️ Urgent issues
-- ⚠️ Complex problems
-- ⚠️ Account unlocks
-- ⚠️ System failures
-- ⚠️ Security incidents
-- ⚠️ Policy exceptions
-
-### Validating AI Responses
-
-**Always Verify:**
-- Critical commands before executing
-- Security procedures
-- Compliance requirements
-- System configurations
-
-**How to Verify:**
-- Check official documentation
-- Test in safe environment first
-- Ask for references
-- Consult with human expert for important decisions
-
-**AI Can Be Wrong:**
-- Information may be outdated
-- May not know custom configurations
-- Can misunderstand complex scenarios
-- Use judgment and verify important information
+# If missing, contact administrator
+# Installation requires Mac Mini M4 setup first
+```
 
 ---
 
-**AI Assistant Summary:**
+**AI Assistant Quick Reference:**
 
-| Capability | Available | Notes |
-|------------|-----------|-------|
-| **24/7 Availability** | ✅ Yes | Always available via SSH |
-| **System Knowledge** | ✅ Extensive | Knows CyberHygiene architecture |
-| **Code Generation** | ✅ Yes | Scripts, queries, examples |
-| **Troubleshooting** | ✅ Yes | Step-by-step guidance |
-| **Documentation** | ✅ Yes | Can reference all manuals |
-| **Command Execution** | ❌ No | Security restriction |
-| **Data Access** | ❌ No | Privacy protection |
-| **Conversation Memory** | ⚠️ Limited | Only current session |
+**Interactive Chat:**
+- Command: `llama` or `ai`
+- Use for: Complex questions, learning, exploration
+- Response time: 10-30 seconds
 
-**Best Uses:**
-- Learning system features
-- Understanding error messages
-- Getting command syntax
-- Finding documentation
-- Troubleshooting workflows
-- Generating code examples
+**Quick Queries:**
+- Command: `ask-ai "question"`
+- Use for: Simple questions, command syntax
+- Response time: 10-20 seconds
 
-**Limitations:**
-- Cannot execute commands
-- Cannot access your files
-- Cannot make system changes
-- May not know recent changes
-- Requires verification for critical tasks
+**Security Analysis:**
+- Command: `ai-analyze-wazuh [count]`
+- Use for: Security alert triage
+- Response time: 20-40 seconds
+
+**Log Analysis:**
+- Command: `ai-analyze-logs [file] [lines]`
+- Use for: Log file investigation
+- Response time: 15-30 seconds
+
+**Troubleshooting:**
+- Command: `ai-troubleshoot "problem"`
+- Use for: Diagnostic guidance
+- Response time: 15-30 seconds
+
+**Web Interface:**
+- Access: http://192.168.1.7 (from Mac Mini)
+- Use for: Visual interface, document analysis
+- Features: Workspaces, history, copy-paste
+
+**AI Server:**
+- Location: Mac Mini M4 (192.168.1.7)
+- Model: Code Llama 7B
+- Service: Ollama (port 11434)
+- Network: Air-gapped (local only)
+
+**Compliance:**
+- ✅ NIST 800-171 compliant
+- ✅ No CUI access by AI
+- ✅ Human-in-the-loop required
+- ✅ Full audit trail
+- ✅ No internet dependency
+
+**Best Practices:**
+- Be specific with questions
+- Provide context for complex issues
+- Review AI recommendations before executing
+- Log all administrative actions
+- Use appropriate tool for task
+
+**Remember:**
+The AI provides recommendations; you decide and execute!
 
 ---
 
 **Related Chapters:**
-- Chapter 10: Getting Help & Support
-- Chapter 5: Quick Reference Card
+- Chapter 10: Getting Help
+- Chapter 17: Wazuh Security Monitoring
+- Chapter 21: Graylog Log Analysis
+- Chapter 22: Incident Response
 - Appendix C: Command Reference
-- Appendix D: Troubleshooting Guide
 
-**To Start Using Claude Code:**
-```bash
-ssh username@dc1.cyberinabox.net
-claude
-```
+**For AI Issues:**
+- Server connectivity: ping 192.168.1.7
+- Service status: curl http://192.168.1.7:11434/api/tags
+- Administrator: dshannon@cyberinabox.net
+- Documentation: /home/dshannon/Documents/Claude/Interactive AI/
 
-**Remember:**
-- Claude is a tool to assist you, not replace human expertise
-- Always verify critical information
-- Don't share sensitive data in conversations
-- Use human support for urgent or complex issues
-- Provide feedback to help improve the system
+**Note on Development:**
+This system uses Code Llama running locally. During Phase I development,
+Claude Code (an internet-connected AI from Anthropic) was used as a
+development tool but is not part of the production system due to
+compliance requirements. See Chapter 2 for details on development tools.

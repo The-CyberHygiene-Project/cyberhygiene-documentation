@@ -6,11 +6,11 @@
 
 **CyberHygiene Production Network User Manual**
 ```
-Version: 1.0.0
-Release Date: December 31, 2025
-Status: Phase I Complete
+Version: 1.0.1
+Release Date: January 1, 2026
+Status: Phase I Complete (Corrected AI Documentation)
 Author: Donald Shannon
-Assistant: Claude Code (Anthropic)
+Development Assistant: Claude Code (Anthropic - development tool only)
 
 Document Statistics:
   Total Parts: 8
@@ -71,6 +71,68 @@ Build metadata:
 
 ## F.2 Version History
 
+### Version 1.0.1 (January 1, 2026)
+
+**AI Documentation Correction**
+```
+Release Date: January 1, 2026
+Git Tag: v1.0.1
+Commit Hash: [To be added at commit time]
+Author: Donald Shannon
+
+Change Type: PATCH - Documentation Correction
+Reason: Corrected AI system documentation to distinguish development tools
+        from production systems for NIST 800-171 compliance accuracy.
+
+Critical Correction:
+  The documentation incorrectly identified Claude Code (an internet-connected
+  AI from Anthropic) as the operational AI system. This has been corrected
+  throughout the manual to accurately reflect that:
+
+  - Claude Code was a DEVELOPMENT TOOL used during Phase I (Jul-Dec 2025)
+  - Code Llama on Mac Mini M4 is the PRODUCTION AI system
+  - Production AI is air-gapped and NIST 800-171 compliant
+  - Claude Code will be disabled when system enters production
+
+Files Updated (16 files):
+  ✓ Chapter 2: Project Overview - Added dev vs production section
+  ✓ Chapter 3: System Architecture - Added Mac Mini M4, updated AI section
+  ✓ Chapter 10: Getting Help - Complete AI section rewrite
+  ✓ Chapter 12: File Sharing - Updated AI reference
+  ✓ Chapter 13: Email Communication - Updated AI reference
+  ✓ Chapter 14: Web Applications - Updated AI reference
+  ✓ Chapter 15: AI Assistant - COMPLETE REWRITE (875 lines)
+  ✓ Chapter 18: Suricata Network Security - Updated AI reference
+  ✓ Chapter 22: Incident Response - Updated AI references (4 locations)
+  ✓ Chapter 25: Reporting Security Issues - Updated AI references (3 locations)
+  ✓ Chapter 26: Malware Detection Alerts - Updated AI references (2 locations)
+  ✓ Appendix A: Glossary - Updated AI definition
+  ✓ Appendix C: Command Reference - Updated AI reference
+  ✓ Appendix D: Troubleshooting - Updated AI references (2 locations)
+  ✓ Appendix F: Version History - Added clarification and this entry
+  ✓ README.md - Updated project description
+  ✓ TABLE_OF_CONTENTS.md - Updated Chapter 15 title
+
+Key Changes:
+  - Replaced "Claude Code" with "Code Llama" or "AI assistant" throughout
+  - Updated all command examples from `claude` to `llama` or `ai`
+  - Added comprehensive section 2.6 explaining development vs production tools
+  - Completely rewrote Chapter 15 with accurate production AI documentation
+  - Updated system count from 6 to 7 servers (added Mac Mini M4)
+  - Added Mac Mini M4 to all network diagrams and system lists
+  - Updated all AI access methods and capabilities
+  - Clarified compliance architecture and security boundaries
+
+Impact: High
+  This correction is critical for compliance accuracy and operational clarity.
+  Users must understand which AI system is available in production and how
+  it differs from development tools.
+
+Backward Compatibility: Full
+  No breaking changes. All references updated consistently.
+  Version 1.0.0 content remains valid with this clarification.
+```
+
 ### Version 1.0.0 (December 31, 2025)
 
 **Initial Release - Phase I Complete**
@@ -110,7 +172,7 @@ Part III: Daily Operations
   - Chapter 12: File Sharing (650+ lines)
   - Chapter 13: Email Communication (800+ lines)
   - Chapter 14: Web Applications (550+ lines)
-  - Chapter 15: AI Assistant (Claude Code) (580+ lines)
+  - Chapter 15: AI Assistant (Code Llama on Mac Mini M4) (875 lines)
 
 Part IV: Dashboards & Monitoring
   - Chapter 16: CPM Dashboard (418 lines)
@@ -569,11 +631,13 @@ Contributions:
   - Phase I leadership
 ```
 
-**AI Assistant:**
+**Development AI Assistant:**
 ```
 Claude Code (Anthropic)
-Role: Documentation Assistant
+Role: Documentation Development Assistant (Phase I Development Only)
 Model: Claude Sonnet 4.5
+Status: Development tool - NOT part of production environment
+
 Contributions:
   - Content structuring and organization
   - Technical writing and formatting
@@ -583,6 +647,14 @@ Contributions:
   - Command examples
   - Quick reference cards
   - Comprehensive coverage
+
+Important Note:
+  Claude Code was used exclusively during Phase I development for
+  documentation creation and system design. It is NOT the production
+  AI system. The production environment uses Code Llama running on
+  an air-gapped Mac Mini M4 (192.168.1.7) for NIST 800-171 compliance.
+
+  See Chapter 15 for details on the production AI system.
 ```
 
 ### Acknowledgments

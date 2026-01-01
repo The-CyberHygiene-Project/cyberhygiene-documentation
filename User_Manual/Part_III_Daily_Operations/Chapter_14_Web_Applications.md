@@ -580,7 +580,7 @@ Compliance: [SOC 2, ISO 27001, etc.]
 - Application-specific issues: Contact IT
 - Access requests: Email administrator
 - Security concerns: security@cyberinabox.net
-- How-to questions: Ask Claude Code
+- How-to questions: Ask AI assistant (llama/ai command)
 
 ---
 

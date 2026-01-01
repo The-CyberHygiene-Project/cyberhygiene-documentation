@@ -9,7 +9,7 @@
 #### Tier 1: Self-Service Resources
 - This User Manual
 - Online documentation portal
-- AI Assistant (Claude Code)
+- AI Assistant (Code Llama)
 - Quick Reference Card (Chapter 5)
 - FAQ database
 
@@ -115,18 +115,19 @@ Contact me at: [Alternative email or phone]
 - Security procedures
 - Compliance requirements
 
-## 10.2 AI Assistant (Claude Code)
+## 10.2 AI Assistant (Code Llama)
 
-### What is Claude Code?
+### What is the AI Assistant?
 
-**Claude Code** is an AI-powered assistant integrated into the CyberHygiene network to help users with:
+**Code Llama** is a local, air-gapped AI assistant running on a Mac Mini M4 (192.168.1.7) to help users with:
 - Answering questions about system usage
 - Troubleshooting common issues
 - Explaining documentation
 - Providing command syntax help
 - Security best practices guidance
+- Analyzing log files and security alerts
 
-**Availability:** 24/7 via SSH command line
+**Availability:** 24/7 via command line tools or web interface
 
 **Best For:**
 - Quick questions
@@ -134,75 +135,102 @@ Contact me at: [Alternative email or phone]
 - Documentation lookups
 - Learning how to perform tasks
 - Understanding error messages
+- Interpreting security alerts
 
 **Not Suitable For:**
 - Executing administrative commands (security restriction)
 - Making system changes
-- Accessing sensitive data
+- Accessing CUI/FCI data directly
 - Replacing human support for complex issues
+- Emergency situations (contact human support)
 
-### Accessing Claude Code
+### Accessing the AI Assistant
 
-**SSH Access:**
+**Command Line Access:**
 ```bash
-# SSH to any system
-ssh username@dc1.cyberinabox.net
+# Interactive session (llama or ai command)
+llama
 
-# Start Claude Code assistant
-claude
+# Or use the ai alias
+ai
 
-# Or use the full path
-/usr/local/bin/claude-code
+# Quick one-shot query
+ask-ai "How do I change my password?"
+
+# Analyze Wazuh alerts
+ai-analyze-wazuh
+
+# Analyze log files
+ai-analyze-logs /var/log/messages
+
+# Troubleshoot issues
+ai-troubleshoot "SSH connection refused"
 ```
 
-**Interactive Session:**
+**Interactive Session Example:**
 ```
-Welcome to Claude Code - CyberHygiene AI Assistant
+$ llama
 
-Type your question or request, and I'll help you.
-Type 'exit' or 'quit' to end the session.
-Type 'help' for usage tips.
+Connecting to AI Assistant (Code Llama 7B)...
+Connected.
+
+Type your question and press Enter.
+Type 'exit' or 'quit' to end session.
 
 You: How do I change my password?
 
-Claude: You can change your password using the 'passwd' command:
+AI: You can change your password using the 'passwd' command:
 
 1. SSH to any system: ssh username@dc1.cyberinabox.net
 2. Run: passwd
 3. Enter your current password when prompted
-4. Enter your new password (must be 15+ characters)
+4. Enter your new password (must be 14+ characters with 3 character classes)
 5. Confirm your new password
 
 Alternatively, you can use the FreeIPA web interface:
 1. Navigate to https://dc1.cyberinabox.net
-2. Login with current credentials
+2. Login with current credentials (kinit first for Kerberos auth)
 3. Click your username → Change Password
 
 You:
 ```
 
-### Claude Code Capabilities
+**Web Interface Access:**
+```
+AnythingLLM Web Interface:
+URL: http://192.168.1.7:3001
+Login: (Contact administrator for credentials)
+
+Features:
+- Chat interface with Code Llama
+- Document upload and analysis
+- Conversation history
+- Workspace organization
+```
+
+### AI Assistant Capabilities
 
 **System Information:**
 ```
 You: How many systems are in the network?
 
-Claude: The CyberHygiene Production Network has 6 systems:
+AI: The CyberHygiene Production Network has 7 systems:
 1. dc1.cyberinabox.net - Domain Controller
 2. dms.cyberinabox.net - Document Management
 3. graylog.cyberinabox.net - Log Management
 4. proxy.cyberinabox.net - Web Proxy & IDS
 5. monitoring.cyberinabox.net - Prometheus/Grafana
 6. wazuh.cyberinabox.net - SIEM
+7. Mac Mini M4 (192.168.1.7) - AI Assistant Server
 
-All systems are running Rocky Linux 9.5 in FIPS mode.
+All Rocky Linux systems are running version 9.5 in FIPS mode.
 ```
 
 **Troubleshooting Help:**
 ```
 You: I'm getting "Permission denied" when trying to access /datastore/shared
 
-Claude: The "Permission denied" error typically means:
+AI: The "Permission denied" error typically means:
 
 1. Your user account doesn't have access to that directory
 2. You're not in the required group
@@ -225,7 +253,7 @@ If you should have access:
 ```
 You: What's the syntax for mounting the shared NFS drive?
 
-Claude: To mount the shared NFS drive with Kerberos authentication:
+AI: To mount the shared NFS drive with Kerberos authentication:
 
 sudo mount -t nfs -o sec=krb5 dms.cyberinabox.net:/exports/shared /mnt/shared
 
@@ -245,7 +273,7 @@ Prerequisites:
 ```
 You: Where can I find information about MFA setup?
 
-Claude: Multi-Factor Authentication setup is documented in:
+AI: Multi-Factor Authentication setup is documented in:
 
 User Manual: Chapter 8 - Multi-Factor Authentication (MFA)
 Location: /home/dshannon/Documents/User_Manual/Part_II_Getting_Started/Chapter_08_MFA.md
@@ -257,10 +285,10 @@ Key sections:
 - 8.5 Troubleshooting MFA
 
 You can also access the FreeIPA web interface at https://dc1.cyberinabox.net
-to enroll in MFA directly.
+to enroll in MFA directly (use kinit first for Kerberos authentication).
 ```
 
-### Claude Code Best Practices
+### AI Assistant Best Practices
 
 **DO:**
 - ✅ Ask clear, specific questions
@@ -465,7 +493,7 @@ grep -r "password reset" .
 ```
 
 **Response:**
-- **Contact:** Email or ask Claude Code
+- **Contact:** Email or ask AI assistant
 - **Response Time:** 2-3 business days
 
 ### How to Report Effectively
@@ -699,7 +727,7 @@ Urgency: [Immediate need or general interest]
 - **Primary Support:** dshannon@cyberinabox.net
 - **Security Issues:** security@cyberinabox.net
 - **Emergency:** (See emergency contact card)
-- **AI Assistant:** Run `claude` command via SSH
+- **AI Assistant:** Run `llama` or `ai` command, or visit http://192.168.1.7:3001
 
 **Hours:**
 - **Business Hours:** Monday-Friday, 8:00 AM - 5:00 PM EST
@@ -718,7 +746,7 @@ Urgency: [Immediate need or general interest]
 **Remember:**
 - Use appropriate priority level
 - Provide complete information
-- Try Claude Code for quick questions
+- Try AI assistant for quick questions
 - Don't hesitate to ask for help!
 
 **"Better to ask than to break something trying to fix it yourself!"**
