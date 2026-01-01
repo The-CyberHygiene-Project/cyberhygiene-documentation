@@ -1,0 +1,28 @@
+FreeIPA OTP Token - [USERNAME]
+=============================
+Created: [DATE]
+Token ID: [REDACTED]
+Type: TOTP (Time-based One-Time Password)
+
+Configuration:
+- Algorithm: SHA1
+- Digits: 6
+- Interval: 30 seconds
+- Owner: [USERNAME]
+
+Secret Key (Base32): [REDACTED - Regenerate if compromised]
+
+URI: otpauth://totp/[USERNAME]@DOMAIN:[TOKEN_ID]?issuer=[DOMAIN]&secret=[REDACTED]&digits=6&algorithm=SHA1&period=30
+
+⚠️ SECURITY WARNING ⚠️
+This file previously contained an actual OTP secret key that was exposed in a public
+GitHub repository. The token has been revoked and regenerated as of January 1, 2026.
+
+NEVER store OTP secrets in plain text files committed to version control.
+
+Instructions:
+1. Generate new token: ipa otptoken-add --owner=[username] --type=totp
+2. Scan QR code with authenticator app (Google Authenticator, FreeOTP, Microsoft Authenticator, Authy)
+3. Store secret in password manager (KeePass) as emergency backup
+4. Delete this plain text file after setup complete
+5. Use format: password+OTP (e.g., YourPassword123456)
