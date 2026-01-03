@@ -87,6 +87,13 @@ Superseded and historical documentation.
 - Organized by function
 - Archived superseded files
 
----
+## Support This Project
+
+Your help makes a real difference for small defense contractors facing CMMC/NIST hurdles.
+
+- **In-kind contributions** (our top need): Ansible refactoring for the custom ISO, penetration testing, documentation, or testing on varied hardware → Open an Issue or PR!
+- **Financial support**: Help offset development costs (hardware, time, presentation travel) via [GitHub Sponsors ❤️](https://github.com/sponsors/dshannon46-jpg)
+
+Thank you to all current and future sponsors and contributors!---
 
 *For questions or updates, see the User Manual or contact the system administrator.*
