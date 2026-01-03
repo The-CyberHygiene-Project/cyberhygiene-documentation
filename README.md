@@ -3,6 +3,7 @@
 **Version:** 2.0 (Reorganized January 2026)  
 **Status:** Phase I Complete - Documentation Consolidated
 
+[![Sponsor](https://img.shields.io/badge/Sponsor-%E2%9D%A4-ff69b4?logo=githubsponsors&logoColor=white)](https://github.com/sponsors/dshannon46-jpg)
 ## Document Organization
 
 ### Primary Documents (Root Level)
