@@ -1,0 +1,325 @@
+================================================================================
+ACTIVE SERVICES AND LISTENING PORTS - DC1.CYBERINABOX.NET
+================================================================================
+Generated: January 3, 2026
+Server: 192.168.1.10
+System: Rocky Linux 9 (FIPS Mode Enabled)
+
+================================================================================
+EXTERNAL SERVICES (Network Accessible)
+================================================================================
+
+WEB SERVICES
+------------
+Port 80 (HTTP)               - httpd (Apache Web Server)
+Port 443 (HTTPS)             - httpd (Apache Web Server with SSL)
+Port 3000 (HTTP)             - Redmine (bundle/Ruby on Rails)
+Port 5500 (HTTP)             - CyberHygiene AI Dashboard (Python Flask)
+Port 8080 (HTTP)             - Apache Tomcat (Java - PKI)
+Port 8443 (HTTPS)            - Apache Tomcat SSL (Java - PKI)
+Port 9090 (HTTP)             - Cockpit (systemd web interface)
+
+EMAIL SERVICES
+--------------
+Port 25 (SMTP)               - Postfix (master/smtpd)
+Port 110 (POP3)              - Dovecot
+Port 143 (IMAP)              - Dovecot
+Port 587 (SMTP Submission)   - Postfix
+Port 993 (IMAPS)             - Dovecot (IMAP over SSL)
+Port 995 (POP3S)             - Dovecot (POP3 over SSL)
+
+DIRECTORY & IDENTITY SERVICES
+------------------------------
+Port 53 (DNS)                - named (BIND DNS Server)
+                               - Listening on: 127.0.0.1, ::1, 192.168.1.10
+Port 88 (Kerberos)           - krb5kdc (Kerberos KDC)
+Port 389 (LDAP)              - ns-slapd (389 Directory Server / FreeIPA)
+Port 464 (Kerberos kadmin)   - kadmind
+Port 636 (LDAPS)             - ns-slapd (LDAP over SSL)
+Port 749 (Kerberos admin)    - kadmind
+
+FILE SHARING SERVICES
+---------------------
+Port 139 (NetBIOS)           - smbd (Samba)
+Port 445 (SMB)               - smbd (Samba)
+Port 2049 (NFS)              - [Active - NFS client mount to 192.168.1.118]
+
+SECURITY & MONITORING SERVICES
+-------------------------------
+Port 1514 (Wazuh Agent)      - wazuh-remoted (Wazuh SIEM)
+Port 1515 (Wazuh Auth)       - wazuh-authd (Wazuh SIEM)
+Port 55000 (Wazuh API)       - python3 (Wazuh Manager API)
+
+SYSTEM SERVICES
+---------------
+Port 22 (SSH)                - sshd (OpenSSH Server)
+Port 111 (RPC)               - rpcbind
+Port 514 (Syslog)            - rsyslogd
+Port 38461 (RPC statd)       - rpc.statd
+Port 42403 (RPC)             - [Dynamic RPC port]
+Port 33893 (RPC)             - [Dynamic RPC port]
+Port 37535 (RPC statd IPv6)  - rpc.statd
+
+MONITORING & METRICS
+--------------------
+Port 9091 (HTTP)             - prometheus (Metrics Database)
+Port 9100 (HTTP)             - node_exporter (System Metrics)
+
+================================================================================
+INTERNAL SERVICES (Localhost Only - 127.0.0.1)
+================================================================================
+
+WEB SERVICES
+------------
+Port 3001                    - grafana (Grafana Dashboards)
+Port 5000                    - gunicorn (CPM Dashboard / Python App)
+Port 5001                    - python3.12 (Aider API Service)
+Port 8005                    - java (Tomcat AJP - local only)
+Port 8009                    - java (Tomcat AJP connector)
+
+DATABASE SERVICES
+-----------------
+Port 3306                    - mariadb (MySQL/MariaDB - network accessible)
+Port 5432                    - postmaster (PostgreSQL)
+Port 6379                    - redis-server (Redis Cache)
+Port 27017                   - mongod (MongoDB - Graylog dependency)
+Port 9200                    - java (Wazuh Indexer - OpenSearch)
+Port 9201                    - java (OpenSearch secondary)
+Port 9300                    - java (OpenSearch cluster communication)
+Port 9301                    - java (OpenSearch cluster secondary)
+
+SYSTEM SERVICES
+---------------
+Port 53 (DNS)                - named (Local DNS resolver)
+Port 631                     - cupsd (CUPS Print Server)
+Port 783                     - spamd (SpamAssassin)
+Port 953                     - named (BIND RNDC control channel)
+Port 9101                    - python3 (Suricata Exporter for Prometheus)
+
+OTHER SERVICES
+--------------
+Port 9000                    - java (Graylog Server)
+
+================================================================================
+RUNNING SERVICES (systemd)
+================================================================================
+
+Security & Monitoring:
+- auditd.service             - Linux Audit Daemon
+- fapolicyd.service          - File Access Policy Daemon
+- firewalld.service          - Firewall Management
+- suricata.service           - IDS/IPS Network Security
+- suricata-blocker.service   - Suricata IP Blocking
+- suricata-exporter.service  - Suricata Metrics for Prometheus
+- wazuh-manager.service      - Wazuh SIEM Manager
+- wazuh-indexer.service      - Wazuh Data Indexer (OpenSearch)
+- filebeat.service           - Log Shipper
+- spamassassin.service       - Email Spam Filter
+- spamass-milter.service     - SpamAssassin Sendmail Integration
+- opendkim.service           - Email DKIM Signing
+- usbguard.service           - USB Device Access Control
+- setroubleshootd.service    - SELinux Troubleshooting
+
+Identity & Directory:
+- dirsrv@CYBERINABOX-NET.service  - 389 Directory Server (FreeIPA)
+- krb5kdc.service            - Kerberos Key Distribution Center
+- kadmin.service             - Kerberos Admin Server
+- ipa-custodia.service       - FreeIPA Secret Storage
+- ipa-dnskeysyncd.service    - FreeIPA DNSSEC Key Sync
+- named.service              - BIND DNS Server
+- sssd.service               - System Security Services Daemon
+- sssd-kcm.service           - Kerberos Credential Manager
+
+Web & Application:
+- httpd.service              - Apache Web Server
+- php-fpm.service            - PHP FastCGI Process Manager
+- redmine.service            - Redmine Project Management
+- grafana-server.service     - Grafana Monitoring Dashboards
+- graylog-server.service     - Graylog Log Management
+- pki-tomcatd@pki-tomcat.service - Apache Tomcat (IPA Certificate System)
+
+Database Services:
+- mariadb.service            - MariaDB/MySQL Database
+- postgresql.service         - PostgreSQL Database
+- redis.service              - Redis In-Memory Database
+- mongod.service             - MongoDB Database
+- opensearch.service         - OpenSearch (Wazuh Indexer)
+
+Email Services:
+- postfix.service            - Postfix Mail Transfer Agent
+- dovecot.service            - Dovecot IMAP/POP3 Server
+
+File Sharing:
+- smb.service                - Samba File Server
+
+Monitoring & Metrics:
+- prometheus.service         - Prometheus Metrics Database
+- node_exporter.service      - Node Exporter (System Metrics)
+- cpm-dashboard.service      - CPM System Status Dashboard
+
+System Services:
+- systemd-journald.service   - System Logging
+- systemd-logind.service     - Login Management
+- systemd-udevd.service      - Device Management
+- systemd-hostnamed.service  - Hostname Management
+- dbus-broker.service        - D-Bus Message Bus
+- NetworkManager.service     - Network Configuration
+- chronyd.service            - NTP Time Synchronization
+- rsyslog.service            - System Logging
+- crond.service              - Cron Job Scheduler
+- atd.service                - AT Job Scheduler
+- accounts-daemon.service    - User Account Management
+- polkit.service             - Authorization Manager
+- rtkit-daemon.service       - Real-Time Kit
+- tuned.service              - System Performance Tuning
+- tuned-ppd.service          - Power Profile Daemon
+- irqbalance.service         - IRQ Load Balancing
+- mcelog.service             - Machine Check Exception Logging
+- smartd.service             - SMART Disk Monitoring
+- mdmonitor.service          - Software RAID Monitoring
+
+Desktop Services:
+- gdm.service                - GNOME Display Manager
+- cups.service               - CUPS Print Server
+- colord.service             - Color Management
+- ModemManager.service       - Modem Management
+- avahi-daemon.service       - Avahi mDNS/DNS-SD Service
+- switcheroo-control.service - GPU Switching Control
+- wpa_supplicant.service     - WiFi Authentication
+- udisks2.service            - Disk Management
+
+Other Services:
+- rpcbind.service            - RPC Port Mapper
+- rpc-gssd.service           - RPCSEC GSS Daemon
+- rpc-statd.service          - NFS Status Monitor
+- gssproxy.service           - GSSAPI Proxy
+- libstoragemgmt.service     - Storage Management
+- certmonger.service         - Certificate Monitoring
+- rhsmcertd.service          - Red Hat Subscription Certificate Daemon
+- oddjobd.service            - Odd Job Daemon
+- fwupd.service              - Firmware Update Daemon
+- aider-api.service          - Aider API Service
+- user@1000.service          - User Session (dshannon)
+
+================================================================================
+PORT SUMMARY BY NUMBER
+================================================================================
+
+22      SSH (sshd)
+25      SMTP (Postfix)
+53      DNS (named) - 127.0.0.1, ::1, 192.168.1.10
+80      HTTP (Apache httpd)
+88      Kerberos (krb5kdc)
+110     POP3 (Dovecot)
+111     RPC (rpcbind)
+139     NetBIOS (Samba smbd)
+143     IMAP (Dovecot)
+389     LDAP (389 Directory Server)
+443     HTTPS (Apache httpd)
+445     SMB (Samba smbd)
+464     Kerberos kadmin (kadmind)
+514     Syslog (rsyslogd)
+587     SMTP Submission (Postfix)
+631     IPP Printing (cupsd) - localhost
+636     LDAPS (389 Directory Server)
+749     Kerberos admin (kadmind)
+783     SpamAssassin (spamd) - localhost
+953     BIND RNDC (named) - localhost
+993     IMAPS (Dovecot)
+995     POP3S (Dovecot)
+1514    Wazuh Agent (wazuh-remoted)
+1515    Wazuh Auth (wazuh-authd)
+3000    Redmine (bundle/Rails)
+3001    Grafana (grafana) - localhost
+3306    MySQL (mariadb)
+5000    CPM Dashboard (gunicorn) - localhost
+5001    Aider API (python3.12) - localhost
+5432    PostgreSQL (postmaster) - localhost
+5500    CyberHygiene AI Dashboard (Flask)
+6379    Redis (redis-server) - localhost
+8005    Tomcat AJP (java) - localhost
+8009    Tomcat AJP (java)
+8080    Tomcat HTTP (java)
+8443    Tomcat HTTPS (java)
+9000    Graylog (java) - localhost
+9090    Cockpit (systemd)
+9091    Prometheus (prometheus)
+9100    Node Exporter (node_exporter)
+9101    Suricata Exporter (python3) - localhost
+9200    Wazuh Indexer (OpenSearch) - localhost
+9201    OpenSearch secondary - localhost
+9300    OpenSearch cluster - localhost
+9301    OpenSearch cluster - localhost
+27017   MongoDB (mongod) - localhost
+38461   RPC statd (rpc.statd)
+42403   RPC dynamic port
+33893   RPC dynamic port (IPv6)
+37535   RPC statd IPv6 (rpc.statd)
+55000   Wazuh API (python3)
+
+================================================================================
+SECURITY NOTES
+================================================================================
+
+FIPS Mode: ENABLED
+- All cryptographic operations use FIPS 140-2 validated algorithms
+- Some services may have limited functionality (e.g., Wazuh Dashboard disabled)
+
+Firewall: firewalld ACTIVE
+- External access controlled by firewall rules
+- Internal services (localhost) not exposed to network
+
+SELinux: ENFORCING
+- All services running with SELinux security contexts
+- Additional access control beyond standard permissions
+
+Notable Security Services:
+- Suricata IDS/IPS monitoring all network traffic on 192.168.1.0/24
+- Wazuh SIEM providing comprehensive security monitoring
+- FreeIPA providing centralized authentication and authorization
+- Audit daemon logging all system security events
+- fapolicyd enforcing file access policies
+- USBGuard controlling USB device access
+
+================================================================================
+NOTES
+================================================================================
+
+1. Some Java processes (Tomcat, OpenSearch, Graylog) run multiple instances
+   for different services but share the same binary
+
+2. Dynamic RPC ports (38461, 42403, 33893, 37535) may change on service restart
+
+3. Services listening on 127.0.0.1/::1 are localhost-only and not accessible
+   from the network
+
+4. The Wazuh Dashboard web interface is NOT running due to FIPS mode
+   incompatibility. Use alternative access methods:
+   - System Status Dashboard at http://192.168.1.10:5500
+   - Wazuh REST API at https://localhost:55000
+   - Direct log file access
+
+5. NFS client is mounted to 192.168.1.118:/volume1/NFSBackup at /mnt/nas-backup
+
+6. All web services (HTTP/HTTPS) use Apache httpd as the front-end proxy
+   with SSL.com wildcard certificate for *.cyberinabox.net domains
+
+7. MongoDB (port 27017) is a dependency for Graylog and only accepts localhost
+   connections
+
+8. Redis (port 6379) is used for session/cache storage by multiple applications
+
+================================================================================
+DOCUMENTATION
+================================================================================
+
+For detailed service documentation, see:
+- /home/dshannon/DASHBOARD_BOOKMARKS.md
+- /home/dshannon/cyberhygiene-ai-admin/README.md
+- /root/BACKUP_RESTORE_PROCEDURES.md
+
+Central Dashboard: https://cyberinabox.net/switchboard.html
+System Management: https://dc1.cyberinabox.net:9090 (Cockpit)
+AI Assistant: http://192.168.1.10:5500
+
+================================================================================

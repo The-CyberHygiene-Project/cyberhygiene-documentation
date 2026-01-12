@@ -241,8 +241,8 @@ swap           ~16 GB   - Encrypted swap
 ## Quick Reference
 
 **Remote Management URLs:**
-- dc1 iLO: https://ilo-dc1-ip-address
-- LabRat iLO: https://ilo-labrat-ip-address
+- dc1 iLO: https://192.168.1.129
+- LabRat iLO: https://192.168.1.130
 
 **System Access:**
 - Domain: cyberinabox.net

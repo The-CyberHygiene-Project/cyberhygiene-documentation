@@ -79,6 +79,10 @@
 - Capability: Available for network segmentation or bonding
 
 **iLO 5 Management Interface:**
+- IP Address: 192.168.1.129
+- MAC Address: 94:40:c9:ef:f4:ae
+- Web Access: https://192.168.1.129
+- SSH Access: ssh administrator@192.168.1.129
 - Dedicated out-of-band management port
 - Remote console access
 - Remote power management
@@ -145,6 +149,10 @@
 **Additional Interfaces:** May have eno2, eno3, eno4 (unused)
 
 **iLO 5 Management Interface:**
+- IP Address: 192.168.1.130
+- MAC Address: 94:40:c9:ed:5f:66
+- Web Access: https://192.168.1.130
+- SSH Access: ssh administrator@192.168.1.130
 - Dedicated out-of-band management port
 - Remote console access
 - Remote power management
@@ -309,8 +317,8 @@
 
 **Access:**
 - Dedicated Ethernet port (separate from server network)
-- Web interface: https://ilo-ip-address
-- SSH: ssh administrator@ilo-ip-address
+- Web interface: https://192.168.1.129 (dc1) or https://192.168.1.130 (LabRat)
+- SSH: ssh administrator@192.168.1.129 (dc1) or ssh administrator@192.168.1.130 (LabRat)
 
 ---
 

@@ -296,7 +296,7 @@ sudo apctest
 **Temperature Alarms:**
 - HP iLO 5 (on dc1) provides hardware temperature monitoring
 - Critical temperature threshold triggers alert
-- Monitor via iLO dashboard: https://192.168.1.10:5900
+- Monitor via iLO dashboard: https://192.168.1.129
 
 **Emergency Response:**
 - If office temperature exceeds safe range:

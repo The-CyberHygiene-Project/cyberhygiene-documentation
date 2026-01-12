@@ -1,53 +1,107 @@
-# Sensitive Files - Credentials and Keys
+# ========================================
+# SECURITY-FOCUSED .gitignore
+# Updated: January 1, 2026
+# Lesson learned: Never commit credentials!
+# ========================================
+
+# === CRITICAL: SPECIFIC FILES FROM SECURITY INCIDENT ===
+# These files contained credentials - NEVER commit them
+Claude/CLAUDE.md
+Claude/MFA_Configuration/*token*.txt
+Claude/Anti-Malware/*API*
+Claude/Anti-Malware/Virus*Total*
+Certification and Compliance Evidence/back-up*Key*
+Certification and Compliance Evidence/backup*key*
+
+# === CREDENTIALS & SECRETS (PATTERNS) ===
+*password*.txt
+*Password*.txt
+*PASSWORD*.txt
+*credential*.txt
+*secret*.txt
+*Secret*.txt
+*token*.txt
+*Token*.txt
+*api*key*.txt
+*apikey*.txt
+*API*KEY*.txt
+
+# Actual key files
 *.key
 *.pem
 *.p12
 *.pfx
-**/private/
-*password*
-*secret*
-*credential*
 
-# SSL/TLS Certificates (keep documentation, exclude actual certs)
+# Environment files
+.env
+.env.*
+*.env
+
+# Configuration files with credentials
+*credentials.txt
+*creds.txt
+wazuh-credentials*
+roundcube*password*
+.smbcredentials
+.git-credentials
+
+# === SSL/TLS CERTIFICATES ===
+# Keep documentation, exclude actual certs
 *.crt
 *.cer
 *.csr
 !**/SSL_Certificate_Reference/*.md
+!**/SSL_Certificate_Reference/*.txt
 
-# Backup Files
+# === BACKUP FILES ===
 *.backup
 *.bak
 *~
 *.swp
 *.swo
 
-# Temporary Files
+# === TEMPORARY FILES ===
 *.tmp
 .DS_Store
 Thumbs.db
 
-# Log Files
+# === LOG FILES ===
 *.log
 
-# Compiled Files
+# === COMPILED FILES ===
 *.pyc
 *.pyo
 __pycache__/
 
-# Archives
+# === ARCHIVES ===
 *.zip
 *.tar.gz
 *.tgz
 
-# Office Temporary Files
+# === OFFICE TEMPORARY FILES ===
 ~$*
-*.tmp
 
-# Exclude specific sensitive directories
+# === SENSITIVE DIRECTORIES ===
 .ssh/
 .gnupg/
+**/private/
+secrets/
+.secrets/
 
-# But include all markdown and documentation files
-!*.md
-!*.docx
-!*.pdf
+# === ALLOW DOCUMENTATION (BUT NOT IF IT CONTAINS SECRETS) ===
+# IMPORTANT: .md files CAN contain secrets (as we learned!)
+# Only allow specific safe documentation files
+!README.md
+!TABLE_OF_CONTENTS.md
+!RELEASE_NOTES*.md
+!**/Chapter*.md
+!**/Appendix*.md
+# DO NOT use blanket !*.md - it overrides security patterns!
+
+# ========================================
+# PRE-COMMIT CHECKLIST:
+# 1. Run: git status
+# 2. Run: git diff --cached
+# 3. Verify NO passwords/secrets in changes
+# 4. When in doubt, DON'T commit!
+# ========================================

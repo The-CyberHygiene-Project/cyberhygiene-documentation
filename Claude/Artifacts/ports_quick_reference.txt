@@ -1,0 +1,73 @@
+================================================================================
+QUICK REFERENCE - COMMON PORTS ON DC1.CYBERINABOX.NET
+================================================================================
+
+WEB & DASHBOARDS
+----------------
+80, 443          Apache Web Server (cyberinabox.net domains)
+3000             Redmine Project Management
+5500             CyberHygiene AI Dashboard ⭐ NEW
+8080, 8443       Apache Tomcat (IPA Certificate Services)
+9090             Cockpit System Management
+
+EMAIL
+-----
+25               SMTP (Postfix outbound)
+110, 143         POP3/IMAP (Dovecot)
+587              SMTP Submission (authenticated sending)
+993, 995         IMAPS/POP3S (encrypted)
+
+IDENTITY & DNS
+--------------
+53               DNS (BIND named)
+88               Kerberos KDC
+389, 636         LDAP/LDAPS (FreeIPA)
+464, 749         Kerberos Admin
+
+SECURITY
+--------
+22               SSH
+1514, 1515       Wazuh SIEM
+55000            Wazuh API
+
+DATABASES (localhost only)
+--------------------------
+3306             MariaDB/MySQL
+5432             PostgreSQL
+6379             Redis
+9200             Wazuh Indexer (OpenSearch)
+27017            MongoDB
+
+MONITORING
+----------
+9091             Prometheus
+9100             Node Exporter (system metrics)
+9101             Suricata Exporter (network security metrics)
+3001             Grafana (localhost)
+
+FILE SHARING
+------------
+139, 445         Samba (SMB/CIFS)
+2049             NFS (client mount)
+
+INTERNAL SERVICES (localhost)
+------------------------------
+5000             CPM Dashboard
+5001             Aider API
+9000             Graylog
+631              CUPS Print Server
+783              SpamAssassin
+
+================================================================================
+MOST FREQUENTLY ACCESSED
+================================================================================
+
+User Management:         https://dc1.cyberinabox.net/ipa/ui (443)
+System Admin:            https://dc1.cyberinabox.net:9090 (9090)
+AI Assistant:            http://192.168.1.10:5500 (5500) ⭐
+Email:                   https://webmail.cyberinabox.net (443)
+Projects:                https://projects.cyberinabox.net (443 → 3000)
+Security Monitoring:     Wazuh API port 55000 (dashboard disabled in FIPS)
+Performance Graphs:      https://grafana.cyberinabox.net (443 → 3001)
+
+================================================================================
