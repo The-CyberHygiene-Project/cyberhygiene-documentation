@@ -1,7 +1,7 @@
 # Graylog Log Retention Policy
 ## Evidence Artifact for AU-11 Control
 
-**Export Date:** February 3, 2026
+**Export Date:** February 3, 2026 (Updated)
 **System:** dc1.cyberinabox.net
 **Control:** AU-11 (Audit Record Retention)
 
@@ -9,39 +9,23 @@
 
 ## Configuration Status
 
-**Note:** Graylog retention is currently using DEFAULT settings. Explicit configuration recommended.
+**Status:** CONFIGURED - 90 Day Retention Implemented
 
-### Current Default Settings
+### Active Configuration
 
-From `/etc/graylog/server/server.conf`:
-
-```ini
-# Default retention settings (commented/using defaults)
-#elasticsearch_max_time_per_index = 1d
-#elasticsearch_max_number_of_indices = 20
-#retention_strategy = delete
-#max_index_retention_period = P90d
-disabled_retention_strategies = none,close
-```
-
----
-
-## Recommended Configuration
-
-**Action Required:** Update `/etc/graylog/server/server.conf` with explicit retention policy:
+From `/etc/graylog/server/server.conf` (Updated February 3, 2026):
 
 ```ini
-# Explicit retention configuration for NIST 800-171 compliance
-elasticsearch_max_time_per_index = 1d
+# Updated to 90 days retention per NIST 800-171 AU-11 requirement (February 3, 2026)
 elasticsearch_max_number_of_indices = 90
-retention_strategy = delete
-max_index_retention_period = P90D
+disabled_retention_strategies = none,close
 ```
 
 **Effect:**
 - 90 daily indices retained (90 days online retention)
 - Older indices automatically deleted
 - Meets NIST SP 800-171 requirement for audit log retention
+- Graylog service restarted to apply configuration
 
 ---
 
@@ -68,8 +52,8 @@ max_index_retention_period = P90D
 ## POA&M Reference
 
 **Item:** Configure explicit Graylog retention
-**Target Date:** March 31, 2026
-**Priority:** Medium
+**Status:** COMPLETED - February 3, 2026
+**Configuration:** 90 days retention implemented
 
 ---
 
