@@ -3,8 +3,8 @@
 **System:** CyberHygiene Production Network (All Systems)
 **Organization:** The Contract Coach / CyberHygiene Consulting LLC
 **Classification:** Controlled Unclassified Information (CUI)
-**Version:** 2.1
-**Date Generated:** January 23, 2026
+**Version:** 2.2
+**Date Generated:** February 3, 2026
 **Scope:** 6 systems (1 server, 4 workstations, 1 AI server)
 **Architectures:** x86_64 (Rocky Linux), ARM64 (Apple Silicon)
 
@@ -63,6 +63,7 @@ This Software Bill of Materials (SBOM) provides a comprehensive inventory of all
 | 1.0 | 2025-12-02 | D. Shannon | Initial SBOM for dc1.cyberinabox.net only (1,750 packages) |
 | 2.0 | 2025-12-26 | D. Shannon | Multi-system SBOM: Added ai, ws1, ws2, ws3. Total 5 systems, ~5,600 packages. |
 | 2.1 | 2026-01-23 | D. Shannon | Updated system names (ws1→engineering, ws2→accounting, ws3→labrat). Rocky Linux 9.6→9.7 upgrade. Major software updates: NextCloud 32.0.5, Graylog 6.1.16, Grafana 12.3.1, Wazuh 4.14.2, OpenSSL 3.5.1, PHP 8.2.30. Added OnlyOffice Desktop Editor 9.2.1, fapolicyd. Removed AIDE/ClamAV (not installed). |
+| 2.2 | 2026-02-03 | D. Shannon | Added OpenClaw AI Security Components: OpenClaw Gateway 1.0, Citadel Guard, Sudo Approval Proxy, SysAdmin Agent Dashboard v2.0. Added Python dependencies (LangChain, Streamlit). Updated AI server section with security controls. |
 
 ---
 
@@ -115,6 +116,33 @@ This Software Bill of Materials (SBOM) provides a comprehensive inventory of all
 #### Email Services
 - **postfix** 3.5.25-1.el9 - SMTP Mail Transfer Agent
 - **dovecot** 2.3.16-15.el9 - IMAP/POP3 Mail Server
+
+#### AI Security Infrastructure (NEW - February 2026)
+- **OpenClaw Gateway** 1.0 - AI request gateway with security controls
+  - Location: /opt/openclaw/bin/openclaw-gateway.py
+  - Config: /opt/openclaw/config/openclaw.json
+  - Service: openclaw.service
+  - Port: 18789 (loopback only)
+  - License: Proprietary (internal)
+- **Citadel Guard** 1.0 - Prompt injection defense (integrated in OpenClaw)
+  - 20+ detection patterns
+  - Sanitize-and-flag action
+- **Sudo Approval Proxy** 1.0 - Human-in-the-loop enforcement
+  - Location: /opt/sudo-proxy/bin/sudo_proxy.py
+  - Service: sudo-proxy.service
+  - Socket: /run/sudo-proxy/sudo-proxy.sock
+  - HMAC-SHA256 signed approvals
+- **SysAdmin Agent Dashboard** 2.0 - AI-assisted administration interface
+  - Location: /data/ai-workspace/sysadmin-agent/
+  - Framework: Streamlit + LangChain/LangGraph
+  - Service: sysadmin-agent.service
+  - Port: 8501 (proxied via Apache)
+- **Python Dependencies (AI Stack):**
+  - langchain 0.1.x - LLM framework
+  - langchain-ollama 0.1.x - Ollama integration
+  - langgraph 0.0.x - Agentic workflows
+  - streamlit 1.x - Web dashboard framework
+  - httpx 0.27.x - HTTP client
 
 #### Container Runtime
 - **podman** 5.6.0-11.el9_7 - Container management
