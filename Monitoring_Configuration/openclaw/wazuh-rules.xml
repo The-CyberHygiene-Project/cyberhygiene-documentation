@@ -1,0 +1,190 @@
+<!--
+  Wazuh Custom Rules for OpenClaw AI Security Monitoring
+
+  Deploy to: /var/ossec/etc/rules/local_rules.xml
+
+  Rule ID Range: 100001 - 100050 (AI Security)
+
+  Created: 2026-02-02
+  NIST 800-171: 3.3.1, 3.3.4, 3.6.1
+-->
+
+<group name="ai_security,openclaw">
+
+  <!-- ========================================================== -->
+  <!-- Citadel Guard - Prompt Injection Detection                 -->
+  <!-- ========================================================== -->
+
+  <!-- Prompt Injection Detected (HIGH) -->
+  <rule id="100001" level="10">
+    <decoded_as>json</decoded_as>
+    <match>Citadel Guard|injection|SANITIZED</match>
+    <description>AI Prompt Injection Attempt Detected</description>
+    <group>ai_security,injection,attack</group>
+    <options>alert_by_email</options>
+  </rule>
+
+  <!-- Multiple Injection Attempts (CRITICAL) -->
+  <rule id="100002" level="14" frequency="3" timeframe="60">
+    <if_matched_sid>100001</if_matched_sid>
+    <same_source_ip />
+    <description>CRITICAL: Multiple AI Prompt Injection Attempts</description>
+    <group>ai_security,injection,attack,critical</group>
+    <options>alert_by_email</options>
+  </rule>
+
+  <!-- Instruction Override Pattern -->
+  <rule id="100003" level="10">
+    <match>ignore previous instructions|ignore all instructions|disregard</match>
+    <description>AI Injection: Instruction Override Attempt</description>
+    <group>ai_security,injection</group>
+  </rule>
+
+  <!-- Role Manipulation Pattern -->
+  <rule id="100004" level="10">
+    <match>you are now|act as|pretend to be|roleplay as</match>
+    <description>AI Injection: Role Manipulation Attempt</description>
+    <group>ai_security,injection</group>
+  </rule>
+
+  <!-- System Prompt Extraction -->
+  <rule id="100005" level="12">
+    <match>show.*system prompt|reveal.*instructions|what are your instructions</match>
+    <description>AI Injection: System Prompt Extraction Attempt</description>
+    <group>ai_security,injection,reconnaissance</group>
+  </rule>
+
+  <!-- ========================================================== -->
+  <!-- Sudo Approval Proxy Events                                 -->
+  <!-- ========================================================== -->
+
+  <!-- Approval Request -->
+  <rule id="100010" level="5">
+    <match>APPROVAL_REQUESTED</match>
+    <description>AI Sudo Proxy: Approval Request Submitted</description>
+    <group>ai_security,sudo_proxy</group>
+  </rule>
+
+  <!-- Approval Granted -->
+  <rule id="100011" level="5">
+    <match>APPROVED_EXECUTING</match>
+    <description>AI Sudo Proxy: Command Approved and Executed</description>
+    <group>ai_security,sudo_proxy</group>
+  </rule>
+
+  <!-- Approval Denied by Operator -->
+  <rule id="100012" level="7">
+    <match>OPERATOR_DENIED</match>
+    <description>AI Sudo Proxy: Command Denied by Operator</description>
+    <group>ai_security,sudo_proxy,denied</group>
+  </rule>
+
+  <!-- Approval Timeout (Auto-Denied) -->
+  <rule id="100013" level="7">
+    <match>TIMEOUT_DENIED</match>
+    <description>AI Sudo Proxy: Approval Request Timed Out</description>
+    <group>ai_security,sudo_proxy,timeout</group>
+  </rule>
+
+  <!-- Command Validation Failed -->
+  <rule id="100014" level="8">
+    <match>VALIDATION_FAILED</match>
+    <description>AI Sudo Proxy: Command Validation Failed</description>
+    <group>ai_security,sudo_proxy,blocked</group>
+  </rule>
+
+  <!-- Dashboard Unreachable -->
+  <rule id="100015" level="9">
+    <match>DASHBOARD_UNREACHABLE</match>
+    <description>AI Sudo Proxy: Dashboard Unreachable - Auto Denied</description>
+    <group>ai_security,sudo_proxy,service_failure</group>
+  </rule>
+
+  <!-- CRITICAL: Signature Verification Failed -->
+  <rule id="100016" level="15">
+    <match>SIGNATURE_INVALID|Invalid signature</match>
+    <description>CRITICAL: AI Approval Signature Verification Failed</description>
+    <group>ai_security,sudo_proxy,critical,tampering</group>
+    <options>alert_by_email</options>
+  </rule>
+
+  <!-- ========================================================== -->
+  <!-- OpenClaw Gateway Events                                    -->
+  <!-- ========================================================== -->
+
+  <!-- Authentication Failure -->
+  <rule id="100020" level="10">
+    <match>Authentication failed|401|Unauthorized</match>
+    <srcport>18789</srcport>
+    <description>AI Gateway: Authentication Failure</description>
+    <group>ai_security,authentication_failed</group>
+  </rule>
+
+  <!-- Multiple Auth Failures (Brute Force) -->
+  <rule id="100021" level="12" frequency="5" timeframe="120">
+    <if_matched_sid>100020</if_matched_sid>
+    <description>AI Gateway: Possible Brute Force Attack</description>
+    <group>ai_security,authentication_failed,attack</group>
+    <options>alert_by_email</options>
+  </rule>
+
+  <!-- Gateway Started -->
+  <rule id="100022" level="3">
+    <match>Starting OpenClaw Gateway</match>
+    <description>AI Gateway: Service Started</description>
+    <group>ai_security,service</group>
+  </rule>
+
+  <!-- Gateway Stopped -->
+  <rule id="100023" level="5">
+    <match>OpenClaw Gateway stopped|Shutdown signal</match>
+    <description>AI Gateway: Service Stopped</description>
+    <group>ai_security,service</group>
+  </rule>
+
+  <!-- ========================================================== -->
+  <!-- SysAdmin Agent Events                                      -->
+  <!-- ========================================================== -->
+
+  <!-- Command Blocked -->
+  <rule id="100030" level="7">
+    <match>COMMAND_BLOCKED|NOT_WHITELISTED|FORBIDDEN</match>
+    <description>AI Agent: Command Blocked by Policy</description>
+    <group>ai_security,agent,blocked</group>
+  </rule>
+
+  <!-- Proxy Unavailable -->
+  <rule id="100031" level="9">
+    <match>PROXY_UNAVAILABLE|Sudo proxy not available</match>
+    <description>AI Agent: Sudo Proxy Unavailable</description>
+    <group>ai_security,agent,service_failure</group>
+  </rule>
+
+  <!-- Command Executed via Proxy -->
+  <rule id="100032" level="5">
+    <match>PROXY_APPROVED_EXECUTED</match>
+    <description>AI Agent: Privileged Command Executed via Proxy</description>
+    <group>ai_security,agent,executed</group>
+  </rule>
+
+  <!-- ========================================================== -->
+  <!-- Service Health Monitoring                                  -->
+  <!-- ========================================================== -->
+
+  <!-- OpenClaw Service Down -->
+  <rule id="100040" level="10">
+    <match>openclaw.service.*failed|openclaw.*not responding</match>
+    <description>AI Service: OpenClaw Gateway Down</description>
+    <group>ai_security,service_down</group>
+    <options>alert_by_email</options>
+  </rule>
+
+  <!-- Sudo Proxy Service Down -->
+  <rule id="100041" level="12">
+    <match>sudo-proxy.service.*failed|sudo-proxy.*not responding</match>
+    <description>CRITICAL: Sudo Proxy Service Down - HITL Disabled</description>
+    <group>ai_security,service_down,critical</group>
+    <options>alert_by_email</options>
+  </rule>
+
+</group>
