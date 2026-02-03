@@ -3,7 +3,7 @@
 **System:** CyberHygiene Production Network (All Systems)
 **Organization:** The Contract Coach / CyberHygiene Consulting LLC
 **Classification:** Controlled Unclassified Information (CUI)
-**Version:** 2.2
+**Version:** 2.3
 **Date Generated:** February 3, 2026
 **Scope:** 6 systems (1 server, 4 workstations, 1 AI server)
 **Architectures:** x86_64 (Rocky Linux), ARM64 (Apple Silicon)
@@ -16,14 +16,14 @@
 
 | Hostname | IP | Platform | Architecture | Packages | Role |
 |----------|-----|----------|--------------|----------|------|
-| **dc1.cyberinabox.net** | 192.168.1.10 | Rocky Linux 9.7 | x86_64 | ~1,730 | Domain Controller, FIPS enabled |
+| **dc1.cyberinabox.net** | 192.168.1.10 | Rocky Linux 9.7 | x86_64 | ~1,740 | Domain Controller, FIPS enabled |
 | **engineering** | 192.168.1.104 | Rocky Linux 9.7 | x86_64 | ~1,200 | Engineering Workstation, FIPS enabled |
 | **accounting** | 192.168.1.113 | Rocky Linux 9.7 | x86_64 | ~1,100 | Accounting Workstation, FIPS enabled |
 | **labrat** | 192.168.1.115 | Rocky Linux 9.6 | x86_64 | ~1,100 | Lab Workstation, FIPS enabled |
 | **ai** | 192.168.1.7 | macOS Sequoia | ARM64 (M4 Pro) | ~450 | AI/ML Server, Ollama platform |
 
 **Total Systems:** 6 (including Prometheus self-monitoring)
-**Total Software Packages:** ~5,580 across all systems
+**Total Software Packages:** ~5,590 across all systems
 **Heterogeneous Environment:** Mixed x86_64 (Intel/AMD) and ARM64 (Apple Silicon)
 
 ### Platform Distribution
@@ -64,6 +64,7 @@ This Software Bill of Materials (SBOM) provides a comprehensive inventory of all
 | 2.0 | 2025-12-26 | D. Shannon | Multi-system SBOM: Added ai, ws1, ws2, ws3. Total 5 systems, ~5,600 packages. |
 | 2.1 | 2026-01-23 | D. Shannon | Updated system names (ws1→engineering, ws2→accounting, ws3→labrat). Rocky Linux 9.6→9.7 upgrade. Major software updates: NextCloud 32.0.5, Graylog 6.1.16, Grafana 12.3.1, Wazuh 4.14.2, OpenSSL 3.5.1, PHP 8.2.30. Added OnlyOffice Desktop Editor 9.2.1, fapolicyd. Removed AIDE/ClamAV (not installed). |
 | 2.2 | 2026-02-03 | D. Shannon | Added OpenClaw AI Security Components: OpenClaw Gateway 1.0, Citadel Guard, Sudo Approval Proxy, SysAdmin Agent Dashboard v2.0. Added Python dependencies (LangChain, Streamlit). Updated AI server section with security controls. |
+| 2.3 | 2026-02-03 | D. Shannon | Added Email Security packages: OpenDKIM 2.11.0 (DKIM signing/verification), SpamAssassin 3.4.6 (spam filtering), spamass-milter (Postfix integration), and dependencies. SI-8 control implementation complete. |
 
 ---
 
@@ -73,8 +74,8 @@ This Software Bill of Materials (SBOM) provides a comprehensive inventory of all
 **Kernel:** 5.14.0-611.20.1.el9_7.x86_64
 **Architecture:** x86_64
 **FIPS Mode:** Enabled
-**Total Packages:** 1,729 RPM + 1 Flatpak
-**Role:** FreeIPA Domain Controller, Primary DNS, Samba File Server, Wazuh SIEM, Graylog, Web Server, NextCloud
+**Total Packages:** 1,739 RPM + 1 Flatpak
+**Role:** FreeIPA Domain Controller, Primary DNS, Samba File Server, Wazuh SIEM, Graylog, Web Server, NextCloud, Email Server
 
 ### Critical Security Software (dc1)
 
@@ -116,6 +117,25 @@ This Software Bill of Materials (SBOM) provides a comprehensive inventory of all
 #### Email Services
 - **postfix** 3.5.25-1.el9 - SMTP Mail Transfer Agent
 - **dovecot** 2.3.16-15.el9 - IMAP/POP3 Mail Server
+
+#### Email Security (NEW - February 3, 2026)
+- **opendkim** 2.11.0-0.36.el9 - DKIM email signing and verification
+  - Mode: Sign and Verify (sv)
+  - Selector: mail
+  - Key: 2048-bit RSA
+  - Socket: /run/opendkim/opendkim.sock
+  - License: BSD
+- **opendkim-tools** 2.11.0-0.36.el9 - DKIM key generation utilities
+- **libopendkim** 2.11.0-0.36.el9 - OpenDKIM library
+- **spamassassin** 3.4.6-6.el9 - Spam filtering engine
+  - Threshold: 5.0
+  - Bayesian learning enabled
+  - License: Apache 2.0
+- **spamass-milter** 0.4.0-13.el9 - SpamAssassin milter interface
+  - Socket: /run/spamass-milter/postfix/sock
+- **spamass-milter-postfix** 0.4.0-13.el9 - Postfix integration for spamass-milter
+- **sendmail-milter** 8.16.1-11.el9 - Milter library (dependency)
+- **libmemcached-awesome** 1.1.0-12.el9 - Memcached client library (dependency)
 
 #### AI Security Infrastructure (NEW - February 2026)
 - **OpenClaw Gateway** 1.0 - AI request gateway with security controls
