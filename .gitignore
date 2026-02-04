@@ -12,19 +12,25 @@ Claude/Anti-Malware/*API*
 Claude/Anti-Malware/Virus*Total*
 Certification and Compliance Evidence/back-up*Key*
 Certification and Compliance Evidence/backup*key*
+Updated_Passwords.md
+**/Updated_Passwords.md
 
 # === CREDENTIALS & SECRETS (PATTERNS) ===
-*password*.txt
-*Password*.txt
-*PASSWORD*.txt
-*credential*.txt
-*secret*.txt
-*Secret*.txt
-*token*.txt
-*Token*.txt
-*api*key*.txt
-*apikey*.txt
-*API*KEY*.txt
+# Block ALL extensions, not just .txt (lesson learned 2026-02-04)
+*password*
+*Password*
+*PASSWORD*
+*credential*
+*Credential*
+*secret*
+*Secret*
+*token*
+*Token*
+*api*key*
+*apikey*
+*API*KEY*
+*creds*
+*Creds*
 
 # Actual key files
 *.key
