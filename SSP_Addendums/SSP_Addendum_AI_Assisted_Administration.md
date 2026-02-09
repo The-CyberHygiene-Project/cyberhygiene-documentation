@@ -24,7 +24,7 @@ This addendum documents the implementation of AI-assisted system administration 
 | **Framework** | Streamlit 1.x with LangChain/LangGraph |
 | **Service** | sysadmin-agent.service (systemd) |
 | **Port** | 8501 (internal), proxied via Apache HTTPS |
-| **Repository** | https://github.com/dshannon46-jpg/sysadmin-agent |
+| **Repository** | https://github.com/The-CyberHygiene-Project/sysadmin-agent |
 
 ### 2.2 AI Model Configuration
 

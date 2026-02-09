@@ -128,7 +128,7 @@ mydomain = cyberinabox.net
 - Framework: Streamlit 1.x with LangChain/LangGraph integration
 - LLM: Llama 3.3 70B Instruct (Q4_K_M quantization) on Mac Mini M4 Pro
 - Service: sysadmin-agent.service (systemd)
-- Repository: https://github.com/dshannon46-jpg/sysadmin-agent
+- Repository: https://github.com/The-CyberHygiene-Project/sysadmin-agent
 
 **Explainable AI Features (CMMC Compliance):**
 | Feature | Description | NIST Control |

@@ -3,7 +3,7 @@
 **Version:** 2.0 (Reorganized January 2026)  
 **Status:** Phase I Complete - Documentation Consolidated
 
-[![Sponsor](https://img.shields.io/badge/Sponsor-%E2%9D%A4-ff69b4?logo=githubsponsors&logoColor=white)](https://github.com/sponsors/dshannon46-jpg)
+[![Sponsor](https://img.shields.io/badge/Sponsor-%E2%9D%A4-ff69b4?logo=githubsponsors&logoColor=white)](https://github.com/sponsors/The-CyberHygiene-Project)
 
 ## ⚠️ Disclaimer
 
@@ -84,7 +84,7 @@ Superseded and historical documentation.
 ## Quick Links
 
 - **Project Website:** https://cyberhygiene.cyberinabox.net
-- **GitHub Repository:** https://github.com/dshannon46-jpg/cyberhygiene-documentation
+- **GitHub Repository:** https://github.com/The-CyberHygiene-Project/cyberhygiene-documentation
 - **Compliance Status:** 100% (29/29 POA&M items complete)
 
 ## Recent Updates
@@ -107,7 +107,7 @@ Superseded and historical documentation.
 Your help makes a real difference for small defense contractors facing CMMC/NIST hurdles.
 
 - **In-kind contributions** (our top need): Ansible refactoring for the custom ISO, penetration testing, documentation, or testing on varied hardware → Open an Issue or PR!
-- **Financial support**: Help offset development costs (hardware, time, presentation travel) via [GitHub Sponsors ❤️](https://github.com/sponsors/dshannon46-jpg)
+- **Financial support**: Help offset development costs (hardware, time, presentation travel) via [GitHub Sponsors ❤️](https://github.com/sponsors/The-CyberHygiene-Project)
 
 Thank you to all current and future sponsors and contributors!---
 

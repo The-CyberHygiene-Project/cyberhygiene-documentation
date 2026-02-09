@@ -34,7 +34,7 @@ This task list tracks the multi-step effort to update the public website at http
 
 - [x] **README.md** - Main documentation index *(Reviewed - Current)*
   - Version 2.0 (January 2026) - Current
-  - GitHub link verified: https://github.com/dshannon46-jpg/cyberhygiene-documentation
+  - GitHub link verified: https://github.com/The-CyberHygiene-Project/cyberhygiene-documentation
   - Sponsor link present and correct
 
 ### 1.2 Review User Manual *(UPDATED Jan 26, 2026 - v1.0.2)*
@@ -106,8 +106,8 @@ Location: `/home/dshannon/Documents/Certification and Compliance Evidence/`
 ### 3.1 Content Updates Required *(COMPLETED Jan 26, 2026)*
 - [x] **Homepage** - Updated last modified date to January 26, 2026
 - [x] **Compliance Status** - Updated SPRS score to 110/110 (100%)
-- [x] **GitHub Repository Link** - Added link to: https://github.com/dshannon46-jpg/cyberhygiene-documentation
-- [x] **Sponsor Link** - Added GitHub Sponsors link: https://github.com/sponsors/dshannon46-jpg
+- [x] **GitHub Repository Link** - Added link to: https://github.com/The-CyberHygiene-Project/cyberhygiene-documentation
+- [x] **Sponsor Link** - Added GitHub Sponsors link: https://github.com/sponsors/The-CyberHygiene-Project
 - [x] **Open Source Section** - Added new "Open Source Repository" section with GitHub links and project highlights
 
 ### 3.2 Phase II Information to Add *(COMPLETED Jan 26, 2026)*
@@ -116,7 +116,7 @@ Location: `/home/dshannon/Documents/Certification and Compliance Evidence/`
   - Phase II is an automated deployment system
   - Target: HP Proliant DL 20 Gen10 Plus in 6U portable rack
   - Reduces installation from weeks to 6-8 hours
-  - GitHub repository link: https://github.com/dshannon46-jpg/cyberhygiene-documentation (Cyberinabox-phaseII folder)
+  - GitHub repository link: https://github.com/The-CyberHygiene-Project/cyberhygiene-documentation (Cyberinabox-phaseII folder)
   - Status: Planning complete, implementation in progress (Q1 2026)
   - Phase I completion status (100%, 29/29 POA&M items, $240K savings)
 
@@ -180,7 +180,7 @@ Current sections (from screenshots):
 - [x] Commit all documentation changes to local git
   - Commit: bcf6510 "Website Update: January 2026 - AI Upgrade, Phase II, GitHub Integration"
   - 12 files changed, 670 insertions
-- [x] Push to GitHub: https://github.com/dshannon46-jpg/cyberhygiene-documentation
+- [x] Push to GitHub: https://github.com/The-CyberHygiene-Project/cyberhygiene-documentation
 - [x] Changes now visible on GitHub
 
 ---
@@ -188,8 +188,8 @@ Current sections (from screenshots):
 ## Key Information Summary
 
 ### GitHub Repository
-- **URL:** https://github.com/dshannon46-jpg/cyberhygiene-documentation
-- **Sponsor URL:** https://github.com/sponsors/dshannon46-jpg
+- **URL:** https://github.com/The-CyberHygiene-Project/cyberhygiene-documentation
+- **Sponsor URL:** https://github.com/sponsors/The-CyberHygiene-Project
 - **Phase II Installer:** `/home/dshannon/Cyberinabox-phaseII/`
 
 ### Project Milestones

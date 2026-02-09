@@ -6,7 +6,7 @@ This guide explains how to commit the installer to GitHub and make it available 
 
 ## Repository Information
 
-**GitHub Repository:** https://github.com/dshannon46-jpg/Cyberinabox-phaseII
+**GitHub Repository:** https://github.com/The-CyberHygiene-Project/Cyberinabox-phaseII
 **License:** MIT
 **Platform:** Rocky Linux 9 (FIPS-enabled)
 
@@ -54,7 +54,7 @@ cd "/home/dshannon/Documents/Cybersecurity Project Phase II/Installer"
 git init
 
 # Add remote (if not already done)
-git remote add origin https://github.com/dshannon46-jpg/Cyberinabox-phaseII.git
+git remote add origin https://github.com/The-CyberHygiene-Project/Cyberinabox-phaseII.git
 ```
 
 ### Step 2: Verify .gitignore is Working
@@ -207,10 +207,10 @@ Cyberinabox-phaseII/
 
 ```bash
 # On a test system, try the quick-install script
-curl -sSL https://raw.githubusercontent.com/dshannon46-jpg/Cyberinabox-phaseII/main/quick-install.sh | sudo bash
+curl -sSL https://raw.githubusercontent.com/The-CyberHygiene-Project/Cyberinabox-phaseII/main/quick-install.sh | sudo bash
 
 # Or manual clone
-git clone https://github.com/dshannon46-jpg/Cyberinabox-phaseII.git
+git clone https://github.com/The-CyberHygiene-Project/Cyberinabox-phaseII.git
 cd Cyberinabox-phaseII
 ./master_install.sh
 ```
@@ -218,7 +218,7 @@ cd Cyberinabox-phaseII
 ### Verify Documentation Renders Correctly
 
 Visit on GitHub:
-- https://github.com/dshannon46-jpg/Cyberinabox-phaseII
+- https://github.com/The-CyberHygiene-Project/Cyberinabox-phaseII
 - Check README displays correctly
 - Verify badges render (License, Platform, FIPS)
 - Test all internal links
@@ -424,7 +424,7 @@ ssh-keygen -t ed25519 -C "your.email@example.com"
 cat ~/.ssh/id_ed25519.pub
 
 # Change remote URL
-git remote set-url origin git@github.com:dshannon46-jpg/Cyberinabox-phaseII.git
+git remote set-url origin git@github.com:The-CyberHygiene-Project/Cyberinabox-phaseII.git
 ```
 
 ---

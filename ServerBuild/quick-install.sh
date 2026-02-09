@@ -3,7 +3,7 @@
 # CyberHygiene Phase II - Quick Install Script
 # Downloads and launches the installer from GitHub
 #
-# Usage: curl -sSL https://raw.githubusercontent.com/dshannon46-jpg/Cyberinabox-phaseII/main/quick-install.sh | sudo bash
+# Usage: curl -sSL https://raw.githubusercontent.com/The-CyberHygiene-Project/Cyberinabox-phaseII/main/quick-install.sh | sudo bash
 #
 
 set -euo pipefail
@@ -16,7 +16,7 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # GitHub repository
-REPO_URL="https://github.com/dshannon46-jpg/Cyberinabox-phaseII.git"
+REPO_URL="https://github.com/The-CyberHygiene-Project/Cyberinabox-phaseII.git"
 INSTALL_DIR="/opt/cyberhygiene-installer"
 
 # Logging

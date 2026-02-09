@@ -94,7 +94,7 @@ git clone https://github.com/YOUR-USERNAME/Cyberinabox-phaseII.git
 cd Cyberinabox-phaseII
 
 # Add upstream remote
-git remote add upstream https://github.com/dshannon46-jpg/Cyberinabox-phaseII.git
+git remote add upstream https://github.com/The-CyberHygiene-Project/Cyberinabox-phaseII.git
 
 # Verify remotes
 git remote -v
@@ -747,7 +747,7 @@ WIP
 
 ### Getting Help
 
-- **GitHub Issues:** https://github.com/dshannon46-jpg/Cyberinabox-phaseII/issues
+- **GitHub Issues:** https://github.com/The-CyberHygiene-Project/Cyberinabox-phaseII/issues
 - **Documentation:** See README.md and docs/ directory
 - **Discussions:** GitHub Discussions (if enabled)
 

@@ -82,7 +82,7 @@ sudo su -
 
 # Download installer from GitHub
 cd /root
-git clone https://github.com/dshannon46-jpg/Cyberinabox-phaseII.git
+git clone https://github.com/The-CyberHygiene-Project/Cyberinabox-phaseII.git
 cd Cyberinabox-phaseII
 ```
 

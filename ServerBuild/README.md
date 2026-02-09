@@ -4,7 +4,7 @@
 **Created:** January 1, 2026
 **Purpose:** Automated deployment system for CyberHygiene security platform
 
-[![Sponsor](https://img.shields.io/badge/Sponsor-%E2%9D%A4-ff69b4?logo=githubsponsors&logoColor=white)](https://github.com/sponsors/dshannon46-jpg)
+[![Sponsor](https://img.shields.io/badge/Sponsor-%E2%9D%A4-ff69b4?logo=githubsponsors&logoColor=white)](https://github.com/sponsors/The-CyberHygiene-Project)
 ---
 
 ## Quick Start
@@ -456,7 +456,7 @@ For: Small business NIST 800-171 compliance
 Your help makes a real difference for small defense contractors facing CMMC/NIST hurdles.
 
 - **In-kind contributions** (our top need): Ansible refactoring for the custom ISO, penetration testing, documentation, or testing on varied hardware → Open an Issue or PR!
-- **Financial support**: Help offset development costs (hardware, time, presentation travel) via [GitHub Sponsors ❤️](https://github.com/sponsors/dshannon46-jpg)
+- **Financial support**: Help offset development costs (hardware, time, presentation travel) via [GitHub Sponsors ❤️](https://github.com/sponsors/The-CyberHygiene-Project)
 
 Thank you to all current and future sponsors and contributors!---
 

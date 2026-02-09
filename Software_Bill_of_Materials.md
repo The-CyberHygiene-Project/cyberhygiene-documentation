@@ -641,7 +641,7 @@ This Software Bill of Materials (SBOM) provides a comprehensive inventory of all
 **Retention:** Current + 3 years
 **Next Review:** March 31, 2026
 **Location:** `/home/dshannon/Documents/Certification and Compliance Evidence/Evidence/Software_Inventory/`
-**GitHub:** `dshannon46-jpg/cyberhygiene-documentation`
+**GitHub:** `The-CyberHygiene-Project/cyberhygiene-documentation`
 
 ---
 

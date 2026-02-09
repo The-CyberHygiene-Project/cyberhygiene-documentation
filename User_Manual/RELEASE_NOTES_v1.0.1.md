@@ -156,7 +156,7 @@ This release ensures the User Manual accurately represents the compliant product
 
 ### For New Users
 ```bash
-git clone https://github.com/dshannon46-jpg/cyberhygiene-documentation.git
+git clone https://github.com/The-CyberHygiene-Project/cyberhygiene-documentation.git
 cd cyberhygiene-documentation
 git checkout v1.0.1
 ```
@@ -269,10 +269,10 @@ Planned for future releases:
 
 ## 🔗 Resources
 
-- **Repository:** https://github.com/dshannon46-jpg/cyberhygiene-documentation
+- **Repository:** https://github.com/The-CyberHygiene-Project/cyberhygiene-documentation
 - **Release Tag:** v1.0.1
 - **Documentation:** See User_Manual/ directory
-- **Issues:** https://github.com/dshannon46-jpg/cyberhygiene-documentation/issues
+- **Issues:** https://github.com/The-CyberHygiene-Project/cyberhygiene-documentation/issues
 - **NIST 800-171:** https://csrc.nist.gov/publications/detail/sp/800-171/rev-2/final
 
 ---
