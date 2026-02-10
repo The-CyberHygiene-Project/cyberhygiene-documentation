@@ -3,8 +3,8 @@
 **System:** CyberHygiene Production Network (All Systems)
 **Organization:** The Contract Coach
 **Classification:** Controlled Unclassified Information (CUI)
-**Version:** 2.2
-**Date Generated:** January 31, 2026
+**Version:** 2.3
+**Date Generated:** February 9, 2026
 **Scope:** 6 systems (1 server, 4 workstations, 1 AI server)
 **Architectures:** x86_64 (Rocky Linux), ARM64 (Apple Silicon)
 
@@ -16,14 +16,14 @@
 
 | Hostname | IP | Platform | Architecture | Packages | Role |
 |----------|-----|----------|--------------|----------|------|
-| **dc1.cyberinabox.net** | 192.168.1.10 | Rocky Linux 9.7 | x86_64 | ~1,730 | Domain Controller, FIPS enabled |
+| **dc1.cyberinabox.net** | 192.168.1.10 | Rocky Linux 9.7 | x86_64 | ~1,774 | Domain Controller, FIPS enabled |
 | **engineering** | 192.168.1.104 | Rocky Linux 9.7 | x86_64 | ~1,200 | Engineering Workstation, FIPS enabled |
 | **accounting** | 192.168.1.113 | Rocky Linux 9.7 | x86_64 | ~1,100 | Accounting Workstation, FIPS enabled |
 | **labrat** | 192.168.1.115 | Rocky Linux 9.6 | x86_64 | ~1,100 | Lab Workstation, FIPS enabled |
 | **ai** | 192.168.1.7 | macOS Sequoia | ARM64 (M4 Pro) | ~450 | AI/ML Server, Ollama platform |
 
 **Total Systems:** 6 (including Prometheus self-monitoring)
-**Total Software Packages:** ~5,580 across all systems
+**Total Software Packages:** ~5,624 across all systems
 **Heterogeneous Environment:** Mixed x86_64 (Intel/AMD) and ARM64 (Apple Silicon)
 
 ### Platform Distribution
@@ -64,6 +64,7 @@ This Software Bill of Materials (SBOM) provides a comprehensive inventory of all
 | 2.0 | 2025-12-26 | D. Shannon | Multi-system SBOM: Added ai, ws1, ws2, ws3. Total 5 systems, ~5,600 packages. |
 | 2.1 | 2026-01-23 | D. Shannon | Updated system names (ws1→engineering, ws2→accounting, ws3→labrat). Rocky Linux 9.6→9.7 upgrade. Major software updates: NextCloud 32.0.5, Graylog 6.1.16, Grafana 12.3.1, Wazuh 4.14.2, OpenSSL 3.5.1, PHP 8.2.30. Added OnlyOffice Desktop Editor 9.2.1, fapolicyd. Removed AIDE/ClamAV (not installed). |
 | 2.2 | 2026-01-31 | D. Shannon | Added SysAdmin Agent Dashboard v2.0 with Explainable AI components. New Python packages: LangChain, LangGraph, Streamlit. Added Llama 3.3 70B model on AI server. Added AI evaluation and compliance reporting system. |
+| 2.3 | 2026-02-09 | D. Shannon | Package version refresh: 389-ds-base 2.7.0, audit 3.1.5, Grafana 12.3.2, MongoDB 7.0.29, OpenSSL 3.5.1-7, Podman 5.6.0-13, Suricata 7.0.13. Updated Python/AI versions: LangChain 0.3.27, LangGraph 0.6.11, Streamlit 1.50.0. RPM count 1,774. Updated GitHub org to The-CyberHygiene-Project. Removed OnlyOffice Flatpak. |
 
 ---
 
@@ -73,38 +74,38 @@ This Software Bill of Materials (SBOM) provides a comprehensive inventory of all
 **Kernel:** 5.14.0-611.24.1.el9_7.x86_64
 **Architecture:** x86_64
 **FIPS Mode:** Enabled
-**Total Packages:** 1,729 RPM + 1 Flatpak + Python venv packages
+**Total Packages:** 1,774 RPM + Python venv packages
 **Role:** FreeIPA Domain Controller, Primary DNS, Samba File Server, Wazuh SIEM, Graylog, Web Server, NextCloud, SysAdmin Agent Dashboard
 
 ### Critical Security Software (dc1)
 
 #### Identity & Access Management
-- **389-ds-base** 2.6.1-x.el9_7 - LDAP Directory Server (FreeIPA backend)
+- **389-ds-base** 2.7.0-7.el9 - LDAP Directory Server (FreeIPA backend)
 - **ipa-server** 4.12.2-22.el9_7.1 - FreeIPA Identity Management Server
-- **krb5-server** 1.21.1-x.el9_7 - Kerberos 5 KDC
-- **sssd** 2.9.x-x.el9_7 - System Security Services Daemon
-- **certmonger** 0.79.x - Certificate Management
+- **krb5-server** 1.21.1-8.el9_6 - Kerberos 5 KDC
+- **sssd** 2.9.7-4.el9_7.1 - System Security Services Daemon
+- **certmonger** 0.79.20-1.el9 - Certificate Management
 
 #### Security & Monitoring
 - **wazuh-manager** 4.14.2-1 - Wazuh SIEM Manager
 - **graylog-server** 6.1.16-1 - Centralized Log Management
-- **grafana** 12.3.1-1 - Metrics Visualization
+- **grafana** 12.3.2-1 - Metrics Visualization
 - **fapolicyd** 1.3.3-106.el9_6.1 - File Access Policy Daemon (application whitelisting)
-- **audit** 3.0.7-x.el9_7 - User space tools for kernel auditing
+- **audit** 3.1.5-7.el9 - User space tools for kernel auditing
 - **SELinux** - Mandatory Access Control (enforcing mode)
-- **suricata** 7.x - Network Intrusion Detection System
+- **suricata** 7.0.13-1.el9 - Network Intrusion Detection System
 
 #### Encryption & FIPS
-- **openssl** 3.5.1-5.el9_7 (FIPS validated)
-- **gnutls** 3.8.x-x.el9_7 (FIPS validated)
-- **cryptsetup** 2.7.x-x.el9_7 - LUKS encryption tools
+- **openssl** 3.5.1-7.el9_7 (FIPS validated)
+- **gnutls** 3.8.3-9.el9.0.1 (FIPS validated)
+- **cryptsetup** 2.7.2-4.el9 - LUKS encryption tools
 
 #### Database Services
-- **mongodb-org** 7.0.28-1.el9 - Document database (Graylog backend)
+- **mongodb-org** 7.0.29-1.el9 - Document database (Graylog backend)
 
 #### File Services
 - **samba** 4.22.4-6.el9 - SMB/CIFS file sharing
-- **mdadm** 4.3-x.el9_7 - Software RAID management
+- **mdadm** 4.4-2.el9 - Software RAID management
 
 #### Web Services
 - **httpd** 2.4.62-7.el9_7.3 - Apache HTTP Server
@@ -119,10 +120,7 @@ This Software Bill of Materials (SBOM) provides a comprehensive inventory of all
 - **dovecot** 2.3.16-15.el9 - IMAP/POP3 Mail Server
 
 #### Container Runtime
-- **podman** 5.6.0-11.el9_7 - Container management
-
-#### Desktop Applications (Flatpak)
-- **OnlyOffice Desktop Editor** 9.2.1 - Office productivity suite
+- **podman** 5.6.0-13.el9_7 - Container management
 
 ---
 
@@ -134,18 +132,18 @@ This Software Bill of Materials (SBOM) provides a comprehensive inventory of all
 **Purpose:** AI-assisted system administration with Explainable AI for CMMC compliance
 
 #### Core Application
-- **Streamlit** 1.x - Web application framework
-- **Python** 3.9.x - Runtime environment
+- **Streamlit** 1.50.0 - Web application framework
+- **Python** 3.9.25 - Runtime environment
 
 #### AI/ML Framework
-- **LangChain** 0.3.x - LLM application framework
-- **LangChain-OpenAI** 0.3.x - OpenAI-compatible LLM integration
-- **LangGraph** 0.2.x - Stateful AI agent workflows
-- **httpx** 0.x - Async HTTP client (Ollama communication)
+- **LangChain** 0.3.27 - LLM application framework
+- **LangChain-OpenAI** 0.3.35 - OpenAI-compatible LLM integration
+- **LangGraph** 0.6.11 - Stateful AI agent workflows
+- **httpx** 0.28.1 - Async HTTP client (Ollama communication)
 
 #### Data & Storage
 - **SQLite** 3.x - Feedback and evaluation database
-- **Pandas** 2.x - Data analysis (trend visualization)
+- **Pandas** 2.3.3 - Data analysis (trend visualization)
 
 #### Explainable AI Components
 
@@ -364,8 +362,8 @@ This Software Bill of Materials (SBOM) provides a comprehensive inventory of all
 **Encryption & FIPS:**
 - LUKS disk encryption (AES-256-XTS) on all CUI partitions
 - FIPS 140-2 mode enabled system-wide
-- OpenSSL 3.5.x (FIPS validated)
-- GnuTLS (FIPS validated)
+- OpenSSL 3.5.1 (FIPS validated)
+- GnuTLS 3.8.3 (FIPS validated)
 
 **Authentication:**
 - FreeIPA client integration (Kerberos)
@@ -460,7 +458,7 @@ This Software Bill of Materials (SBOM) provides a comprehensive inventory of all
 
 ### Known Vulnerabilities
 
-**Status as of January 31, 2026:**
+**Status as of February 9, 2026:**
 - All systems patched to current security levels
 - No known critical vulnerabilities (CVSS >7.0)
 - OpenSCAP scans: 110/110 checks passed (Rocky Linux systems)
@@ -498,9 +496,6 @@ This Software Bill of Materials (SBOM) provides a comprehensive inventory of all
 - **LangChain:** MIT License
 - **LangGraph:** MIT License
 - **Python packages:** Various (MIT, BSD, Apache 2.0)
-
-**OnlyOffice Desktop Editor:**
-- **License:** AGPL-3.0 (open source)
 
 ### Commercial Licenses
 
@@ -619,7 +614,7 @@ This Software Bill of Materials (SBOM) provides a comprehensive inventory of all
 
 ## POINT OF CONTACT
 
-**SBOM Owner:** Daniel Shannon
+**SBOM Owner:** Donald E. Shannon
 **Title:** System Administrator / Security Officer
 **Organization:** The Contract Coach
 **Email:** [Contact email]
@@ -645,6 +640,6 @@ This Software Bill of Materials (SBOM) provides a comprehensive inventory of all
 
 ---
 
-**END OF SBOM v2.2**
+**END OF SBOM v2.3**
 
 *This document supports NIST SP 800-171 CM-8, SR-2, and CMMC Level 2 compliance requirements for the CyberHygiene Production Network.*
