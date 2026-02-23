@@ -36,3 +36,18 @@ logs/
 
 # Node
 node_modules/
+
+# ISO build artifacts (too large for git)
+Phase-II/ISO-Build/
+
+# CyberSecurity - generated/large scan output files
+CyberSecurity/**/*.html
+CyberSecurity/**/*.xml
+CyberSecurity/**/oscap-*.sh
+CyberSecurity/**/"back-up Key"
+CyberSecurity/**/back-up*Key*
+
+# SCAP result files
+*.results.xml
+*.results-recheck.xml
+ssg-*.html
