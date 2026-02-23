@@ -1,0 +1,23 @@
+# macOS
+.DS_Store
+._*
+*.webloc
+.AppleDouble
+.LSOverride
+
+# Keys and secrets
+*.key
+*.p12
+*.pem
+
+# Editor files
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# OS files
+Thumbs.db
+.Spotlight-V100
+.Trashes

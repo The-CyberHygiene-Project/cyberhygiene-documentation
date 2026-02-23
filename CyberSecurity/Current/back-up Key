@@ -1,0 +1,41 @@
+Backup Encryption Key
+=====================
+
+⚠️ SECURITY WARNING ⚠️
+This file previously contained an actual backup encryption key that was exposed in a
+public GitHub repository. The key has been rotated and all backups re-encrypted as of
+January 1, 2026.
+
+Encryption Key: [REDACTED - Stored in KeePass and offline secure location]
+
+NEVER commit encryption keys to version control.
+
+To generate new encryption key:
+```bash
+openssl rand -base64 32 > /root/backup-encryption-key.txt
+chmod 600 /root/backup-encryption-key.txt
+```
+
+Key Storage Requirements (NIST 800-171 MP-5):
+1. Store in KeePass password database
+2. Print hardcopy and store in physical safe
+3. Store encrypted copy on offline USB drive in secure location
+4. NEVER commit to Git repositories
+5. NEVER store in cloud services
+6. Rotate every 12 months or immediately if compromised
+
+To re-encrypt existing backups with new key:
+1. Decrypt with old key
+2. Generate new key
+3. Encrypt with new key
+4. Securely wipe old encrypted backups
+5. Update backup scripts with new key location
+6. Test restore procedure with new key
+
+Incident Response:
+If this key is compromised:
+1. Generate new encryption key immediately
+2. Re-encrypt all backups with new key
+3. Securely delete old encrypted backups
+4. Document incident per IR policy
+5. Report as NIST 800-171 security incident
