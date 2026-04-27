@@ -1,0 +1,12 @@
+[Unit]
+Description=Collect OpenSCAP CUI scan results from all CPN systems
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/home/dshannon/scripts/collect_openscap_results.sh --collect-only
+User=root
+StandardOutput=journal
+StandardError=journal
+TimeoutStartSec=300
