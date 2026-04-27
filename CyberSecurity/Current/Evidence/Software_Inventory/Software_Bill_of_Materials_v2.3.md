@@ -527,7 +527,7 @@ This Software Bill of Materials (SBOM) provides a comprehensive inventory of all
 
 ## POINT OF CONTACT
 
-**SBOM Owner:** Daniel Shannon
+**SBOM Owner:** Donald Shannon
 **Title:** System Administrator / Security Officer
 **Organization:** CyberHygiene Consulting LLC
 **Email:** [Contact email]
