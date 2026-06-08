@@ -36,28 +36,45 @@ POA&M Lifecycle:
 
 ### CyberHygiene POA&M Summary
 
-**Current Status (as of December 31, 2025):**
+**Current Status — CPN (cyberinabox.net) as of February 21, 2026:**
 ```
-Total POA&M Items: 29 (All closed)
-  - Original items: 29
-  - Items closed: 29
-  - Items remaining: 0
+POA&M Version: Unified_POAM_v2.11
+Total POA&M Items: 45
+  - Completed: 35 (78%)
+  - On Track: 4 (9%)
+  - Ongoing: 2 (4%)
+  - Closed/Risk Accepted: 1 (2%)
+  - Planned: 1 (2%)
 
-Status by Severity:
-  Critical: 0 open (5 closed)
-  High: 0 open (8 closed)
-  Medium: 0 open (12 closed)
-  Low: 0 open (4 closed)
+SPRS Score (NIST 800-171 R2): 106/110 (96.4%)
+  - Previous: 101/110 (before MFA deployment)
+  - MFA (3.5.3) COMPLETED 02/21/2026: SSH publickey + TOTP on all 4 CPN systems
+  - Remaining deficit: -4 points (risk assessment -3, IR testing -1)
 
-Compliance Achievement:
-  ✓ 100% of POA&M items completed
-  ✓ Phase I objectives achieved
-  ✓ NIST 800-171 full compliance (110/110)
-  ✓ No outstanding security deficiencies
-  ✓ All milestones met on schedule
+Open SPRS Deficits:
+  - 3.11.1 (Risk Assessment): -3 pts, target 04/30/2026
+  - 3.6.3 (IR Testing): -1 pt, target 06/30/2026
 
-Phase I Completion Date: December 31, 2025
-Phase II Planning: In progress
+MFA Completion: COMPLETED
+  Systems: dc1, labrat, engineering, accounting (all 4 CPN systems)
+  Method: SSH publickey + TOTP via pam_google_authenticator
+  Date: February 21, 2026
+```
+
+**Current Status — SecureMac (diwai.org) as of April 13, 2026:**
+```
+POA&M Version: SecureMac_POAM_v1.0
+SPRS Score (NIST 800-171 R2): 108/110 (98.2%)
+  - Remaining deficit: -2 points (risk assessment -3, IR testing -1)
+
+MFA Completion: FULLY COMPLETED April 13, 2026
+  - FIDO2 SSH (ecdsa-sk): deployed April 10, 2026 — VM SSH access
+  - PIV Smart Card macOS login: deployed April 13, 2026 — local access
+  - YubiKey 5C Nano FIPS (serial 34246645) + YubiKey 5 NFC
+
+Open SPRS Deficits:
+  - 3.11.1 (Risk Assessment): -3 pts, target 04/30/2026
+  - 3.6.3 (IR Testing): -1 pt, target 06/30/2026
 ```
 
 ## 41.2 POA&M Item Details (Closed Items)
