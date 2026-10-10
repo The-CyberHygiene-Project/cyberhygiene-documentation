@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Automated Compliance - AI-assisted continuous control verification within The CyberHygiene Project, including the project's own documented failures and corrections">
+    <meta name="keywords" content="automated compliance, continuous monitoring, NIST 800-171, AI-assisted assessment, control verification, research">
+    <title>Automated Compliance | The CyberHygiene Project</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Important Notice Banner -->
+    <div style="background: linear-gradient(135deg, #f8f4e8 0%, #f5f0e0 100%); padding: 15px 30px; border-bottom: 2px solid #d4a574;">
+        <div class="container">
+            <p style="margin: 0; color: #5d4e37; font-size: 1em; text-align: center; line-height: 1.6;">
+                <strong>Research Reference Implementation</strong> — This page documents an ongoing effort within The CyberHygiene Project. See <a href="index.html#risks-limitations" style="color: #8b6914; text-decoration: underline;">limitations</a> on the main project page.
+            </p>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">
+                <h1>Automated Compliance</h1>
+                <p class="tagline">Continuous Verification, Not Continuous Hope</p>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="diwai.html">DIWAI</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#case-studies">Case Studies</a></li>
+                <li><a href="#limitations">Limitations</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h2>Automated Compliance</h2>
+            <h3>Using AI to Make Reassessment Continuous Instead of Occasional</h3>
+            <p class="hero-subtitle">An ongoing effort, developed on <a href="diwai.html" style="color: #ffe9c7;">DIWAI.org</a>, exploring whether AI-assisted tooling can keep compliance evidence honest between formal assessments — including by checking its own prior work</p>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-number">325</span>
+                    <span class="stat-label">Automated Tests, Core Tooling</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">3</span>
+                    <span class="stat-label">Components: Monitor, Diagnose, Repair</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">22/38</span>
+                    <span class="stat-label">Prior Closures Found With Zero Stated Evidence*</span>
+                </div>
+            </div>
+            <p style="font-size: 0.85em; color: rgba(255,255,255,0.8); margin-top: 15px;">*From the project's own documented verification sweep — see Case Studies below. This is the point of the effort, not a hidden embarrassment.</p>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="container">
+            <h2 class="section-title">What "Automated Compliance" Means Here</h2>
+            <div class="two-column">
+                <div class="column">
+                    <h3>Not What It Might Sound Like</h3>
+                    <p>This is not a claim that AI can certify a system compliant, or that automation replaces assessment. The whole rest of this website argues against exactly that idea — see <a href="index.html#risks-limitations">Risks</a> and the <a href="index.html#remediation">2026 Update</a> on the main page, where a credited control turned out to have quietly stopped existing.</p>
+                    <p>The actual research question is narrower: <strong>can AI-assisted tooling make continuous re-verification cheap enough that it actually happens</strong>, instead of compliance evidence going stale between the occasional, expensive, manual reassessment?</p>
+                    <p>This work, proven out on DIWAI, is also Step 2 of the collaborative <a href="index.html#cyber-appliance-project" style="color: #667eea;">Cyber Appliance Project</a> with Jeff — the plan there is to replicate it onto new hardware as a dedicated automated compliance engine, not just document it after the fact.</p>
+                </div>
+                <div class="column">
+                    <h3>The Working Hypothesis</h3>
+                    <ul>
+                        <li>Most compliance failures in this project's own history weren't exotic — they were claims that went unverified after the system around them changed</li>
+                        <li>A monitor that only checks "is the service running" misses the failure modes that actually matter — see Case Studies</li>
+                        <li>AI can help write and run verification checks faster than a human alone, but AI-drafted conclusions still need the same skepticism as human-drafted ones</li>
+                        <li>The real test of a monitoring/assessment tool is whether it can be falsified — including when it's checking itself</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="section alt-bg">
+        <div class="container">
+            <h2 class="section-title">How It Works</h2>
+            <div class="management-intro">
+                <p>Three separate components, deliberately kept separate so that detecting a problem, deciding what to do about it, and actually doing it are three distinct steps — not one opaque action.</p>
+            </div>
+            <div class="three-column">
+                <div class="card">
+                    <h4>1. Control-Health Monitor</h4>
+                    <p>Continuously checks control state and writes a JSON report. Originally just process/service checks — "is it running" — until a real incident (see Case Studies) proved that isn't the same question as "is it working."</p>
+                </div>
+                <div class="card">
+                    <h4>2. diwai-diagnose</h4>
+                    <p>Reads the control-health monitor's report and names the specific, pre-approved repair that applies — but is strictly read-only. It diagnoses; it never runs anything.</p>
+                </div>
+                <div class="card">
+                    <h4>3. diwai-repair</h4>
+                    <p>Executes a repair from a fixed catalog, and only if the ISSO has approved that repair's <em>exact</em> code with a hardware key (YubiKey, PIN + touch) — shows the planned change, requires a typed confirmation, keeps a backup, and supports undo. Any code change invalidates the approval.</p>
+                </div>
+            </div>
+            <div class="highlight-box">
+                <h3>Why Three Steps, Not One</h3>
+                <p>Collapsing "detect, decide, act" into a single automated action is exactly the kind of system that produces convincing-looking results with subtle, unreviewed errors — the same AI Competency Paradox this project flags elsewhere. Keeping diagnosis read-only and gating execution behind a human with a physical key means a wrong diagnosis is just a wrong report, not a wrong change to a production system.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Case Studies Section -->
+    <section id="case-studies" class="section">
+        <div class="container">
+            <h2 class="section-title">Case Studies: Where This Already Caught Something</h2>
+            <div class="management-intro">
+                <p>Both of these are documented against this project's own prior work, not a hypothetical. That's deliberate — a monitoring effort that only ever reports good news isn't demonstrating anything.</p>
+            </div>
+
+            <div style="background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%); padding: 30px; border-radius: 12px; margin: 30px 0;">
+                <h3 style="color: white; font-size: 1.5em; margin-bottom: 15px;">"Running" Is Not "Working"</h3>
+                <p style="color: white; line-height: 1.7; opacity: 0.95;">
+                    On 2026-08-03, the control-health monitor's 24 checks all reported healthy throughout a real, six-minute production incident in which the web server process (<code>httpd</code>) was active — but every authenticated request it handled returned HTTP 500. A process-liveness check cannot see that. The monitor was correctly reporting a fact; it was simply the wrong fact for the question "is this control working."
+                </p>
+                <p style="color: white; line-height: 1.7; opacity: 0.95; margin-top: 15px;">
+                    <strong>Fixed the next day:</strong> an authenticated probe was added and negative-tested — confirmed to actually fail when the real condition is reproduced, not just assumed to work. The check count went from 24 to 25. The fix is small; the lesson generalizes: a monitor's blind spots are discovered by real incidents, not designed away in advance.
+                </p>
+            </div>
+
+            <div style="background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%); padding: 30px; border-radius: 12px; margin: 30px 0;">
+                <h3 style="color: white; font-size: 1.5em; margin-bottom: 15px;">Auditing the Auditor</h3>
+                <p style="color: white; line-height: 1.7; opacity: 0.95;">
+                    A dedicated verification sweep re-examined 38 prior POA&amp;M closures against this system's own register. The finding: only 1 of 38 recorded both a positive and a negative test; 7 said "verified" with no stated mechanism; 3 rested on a document alone; and <strong>22 of 38 stated no evidence whatsoever.</strong> The register, as written, could not distinguish a tested closure from an assumed one.
+                </p>
+                <p style="color: white; line-height: 1.7; opacity: 0.95; margin-top: 15px;">
+                    Six closures were re-tested live. All six held — but the sweep also found <strong>three previously credited points were unsupported</strong>: a remediation had been verified on the service VM, then credited as covering the Mac host too, when the Mac host was never touched. Those points were flagged DISPUTED pending an explicit owner decision, rather than quietly left credited.
+                </p>
+                <p style="color: white; line-height: 1.7; opacity: 0.95; margin-top: 15px;">
+                    <strong>The resulting practice rule, stated directly in the record:</strong> "A closure must state the evidence that would have falsified it." One sentence, applied going forward, intended to make a sweep like this unnecessary the next time.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Limitations Section -->
+    <section id="limitations" class="section" style="background: linear-gradient(135deg, #4a5568 0%, #5a6778 100%); padding: 60px 20px;">
+        <div class="container">
+            <h2 style="text-align: center; color: white; font-size: 2.5em; margin-bottom: 15px;">Limitations</h2>
+            <p style="text-align: center; color: white; font-size: 1.2em; margin-bottom: 40px; opacity: 0.95;">What this approach does not solve</p>
+            <div style="background: white; border-radius: 12px; padding: 40px; max-width: 800px; margin: 0 auto;">
+                <ul style="color: #555; line-height: 2.2; font-size: 1.1em; margin: 0; padding-left: 25px;">
+                    <li><strong>AI-drafted compliance text still needs expert review</strong> — in testing, six out of six AI-drafted policy/documentation changes failed to cite a fitting NIST 800-171A assessment objective without a human catching it</li>
+                    <li><strong>Monitoring blind spots are discovered, not eliminated</strong> — the "running vs. working" gap above was found by a real outage; there is no reason to assume today's check list has no equivalent gap left</li>
+                    <li><strong>Automation can scale a mistake as easily as a correct check</strong> — a monitor that quietly checks the wrong thing produces false confidence faster than a human checking by hand would</li>
+                    <li><strong>This is one system's internal tooling, not a validated product</strong> — see the main project's <a href="index.html#risks-limitations" style="color: #4a5568;">Risks</a> section for the general caveats that apply here too</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Automated Compliance</h4>
+                    <p>An ongoing research effort within The CyberHygiene Project, developed on DIWAI.org, exploring AI-assisted continuous control verification.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Main Project Page</a></li>
+                        <li><a href="diwai.html">DIWAI.org</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#case-studies">Case Studies</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Source</h4>
+                    <ul>
+                        <li><a href="https://github.com/The-CyberHygiene-Project/diwai" target="_blank">diwai repository</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Donald E. Shannon LLC dba The Contract Coach. All rights reserved.</p>
+                <p class="disclaimer"><strong>DISCLAIMER:</strong> This page documents an academic research project and reference implementation. It does not constitute CMMC certification, third-party validation, operational security effectiveness, or legal compliance. <strong>The author does not provide cybersecurity consulting services.</strong> Organizations should engage qualified professionals before attempting compliance implementations.</p>
+                <p style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.2); font-size: 0.85em; opacity: 0.8;">
+                    Documentation and website development assisted by
+                    <a href="https://claude.ai" target="_blank" style="color: #d4a574; text-decoration: none;">Claude</a>
+                    by
+                    <a href="https://anthropic.com" target="_blank" style="color: #d4a574; text-decoration: none;">Anthropic</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

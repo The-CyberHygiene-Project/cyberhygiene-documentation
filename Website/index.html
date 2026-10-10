@@ -29,9 +29,12 @@
                 <li><a href="#about">About</a></li>
                 <li><a href="#risks-limitations">Risks</a></li>
                 <li><a href="#architecture">Architecture</a></li>
+                <li><a href="#remediation">2026 Update</a></li>
                 <li><a href="#compliance">Compliance Status</a></li>
                 <li><a href="#management">Management</a></li>
                 <li><a href="#ai-infrastructure">AI System</a></li>
+                <li><a href="diwai.html">DIWAI</a></li>
+                <li><a href="automated-compliance.html">Automated Compliance</a></li>
                 <li><a href="#technology">Technology</a></li>
                 <li><a href="#results">Observations</a></li>
                 <li><a href="#contact">Contact</a></li>
@@ -136,10 +139,12 @@
                     <li><strong>October 2025:</strong> Core infrastructure completed; OpenSCAP CUI profile scans passing</li>
                     <li><strong>November 2025:</strong> Email server deployed, additional services configured</li>
                     <li><strong>December 2025:</strong> AI infrastructure added; monitoring expanded to 6 systems</li>
-                    <li><strong>January 2026:</strong> Documentation completed; preparing for Nexus 2026 presentation</li>
-                    <li><strong>February 8-10, 2026:</strong> Project presentation at NCMA Nexus, Atlanta GA</li>
-                    <li><strong>Current Status:</strong> Initial design and construction complete; testing and validation await</li>
-                    <li><strong>Next:</strong> Turnover to strategic partner</li>
+                    <li><strong>January 2026:</strong> Documentation completed; preparing for Nexus presentation</li>
+                    <li><strong>April 2026:</strong> Phase IV reference system built — original AI hardware (Mac Mini M4 Pro) repurposed into a single-appliance Mac mini + FIPS-validated Rocky Linux service VM, reachable at <a href="https://diwai.org" target="_blank" style="color: #667eea;">diwai.org</a></li>
+                    <li><strong>July 2026:</strong> Project presented at NCMA Nexus</li>
+                    <li><strong>August–September 2026:</strong> Reference System #1 (dc1) suffered a disk failure and full rebuild — see <a href="#remediation" style="color: #667eea;">2026 Update</a> below for what that surfaced and how it was addressed</li>
+                    <li><strong>Current Status:</strong> Reference System #1 (dc1) actively maintained under continuous compliance remediation; Reference System #2 (DIWAI.org) operational</li>
+                    <li><strong>Path Forward:</strong> continued development of DIWAI.org; improving AI performance for system administration, compliance management, and troubleshooting assistance; and a third reference system in parallel planning — reprising the original two-box pattern (Linux domain controller + Mac mini AI) on new hardware, aimed at a "golden disk" pre-imaged distribution model, and trading Kanidm for 389 Directory Server for simplicity</li>
                 </ul>
             </div>
         </div>
@@ -218,6 +223,37 @@
         </div>
     </section>
 
+    <!-- 2026 Remediation Section -->
+    <section id="remediation" class="section alt-bg">
+        <div class="container">
+            <h2 class="section-title">2026 Update: A Real-World Stress Test</h2>
+            <div class="management-intro">
+                <p>In August 2026, Reference System #1 (dc1) suffered a hardware failure and required a full rebuild. What followed over the next several weeks is, in a sense, the most honest data this project has produced: a live demonstration of the gap between a system that <em>was</em> configured correctly and one that <em>currently is</em>, after real-world disruption.</p>
+            </div>
+
+            <div class="three-column">
+                <div class="card">
+                    <h4>The SPRS Score Correction</h4>
+                    <p>Direct post-rebuild verification found that a previously credited Multifactor Authentication control (NIST 3.5.3) — carried forward across multiple prior assessments — no longer existed on the rebuilt system at all. No enrollment file, no PAM reference. The self-reported score was corrected from an indefensible <strong>106/110</strong> down to a verified, lower-but-honest <strong>101/110 (91.8%)</strong>.</p>
+                    <p style="font-size: 0.85em; color: #666; margin-top: 10px;"><em>Lesson: a control credited once is not a control verified forever. Re-verify after any rebuild, incident, or restore.</em></p>
+                </div>
+                <div class="card">
+                    <h4>Identity & MFA Rebuilt</h4>
+                    <p>Rather than restore the old, locally broken MFA mechanism, the project rebuilt identity architecture around FreeIPA accounts and deployed FIPS-validated PKINIT smartcard authentication (YubiKey). A real lockout-and-recovery incident during that rollout — caught, documented, and resolved using a tested break-glass account — reinforced a recurring lesson: a control being <em>enrolled</em> and a control being <em>enforced</em> are different claims, and only the second one earns credit.</p>
+                </div>
+                <div class="card">
+                    <h4>Repository Governance</h4>
+                    <p>A review of this project's own public documentation repository found personal contact details reachable in its git history, even though removed from the current file tree. The full history — not just the current snapshot — was rewritten to redact those two specific fields, consistent with the project's stated <em>"proportionate, not paranoid"</em> disclosure philosophy: open by default, careful with what's genuinely personal.</p>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h3>Why This Belongs on the Website</h3>
+                <p>This project's whole thesis is that checkbox compliance is not the same as real security — automated scans are a starting point, not a finish line. The August–September 2026 remediation is that thesis playing out in practice: a real failure, a real score correction (downward, not upward), and real fixes verified against live system state rather than assumed from prior documentation. The complete remediation record — including the parts that didn't go smoothly the first time — is maintained publicly in the <a href="https://github.com/The-CyberHygiene-Project/cyberhygiene-documentation" target="_blank" style="color: #667eea;">project repository</a>.</p>
+            </div>
+        </div>
+    </section>
+
     <!-- Compliance Section - Significantly Revised -->
     <section id="compliance" class="section">
         <div class="container">
@@ -225,7 +261,14 @@
 
             <div style="background: #fff3cd; border-left: 5px solid #ffc107; padding: 20px; margin-bottom: 30px; border-radius: 4px;">
                 <p style="margin: 0; color: #856404; font-size: 1.05em;">
-                    <strong>Important Context:</strong> The status indicators below reflect <em>technical control configuration</em> as validated by OpenSCAP automated scanning. They do not represent operational maturity, policy implementation, or third-party assessment results. Automated scans are a starting point, not a finish line.
+                    <strong>Important Context:</strong> The two figures below reflect genuinely different views of the system, not two measurements of the same thing:
+                </p>
+                <ul style="margin: 10px 0 0 0; color: #856404; font-size: 1.05em; line-height: 1.7;">
+                    <li><strong>OpenSCAP (technical control configuration):</strong> automated scanning that validates whether specific technical settings are in place. A starting point, not a finish line.</li>
+                    <li><strong>NIST SP 800-171A Assessment (SPRS self-assessment):</strong> a broader methodology that also weighs operational maturity, policy implementation, and documented evidence — not just technical configuration.</li>
+                </ul>
+                <p style="margin: 10px 0 0 0; color: #856404; font-size: 1.05em;">
+                    Neither figure represents third-party assessment results.
                 </p>
             </div>
 
@@ -237,17 +280,17 @@
                     <p style="font-size: 0.85em; color: #666; margin-top: 10px;">*OpenSCAP CUI profile scan passing as of January 2026. Validates technical configuration only.</p>
                 </div>
                 <div class="compliance-card">
-                    <h3>DFARS 252.204-7012</h3>
-                    <div class="compliance-status">Addressed</div>
-                    <p>Technical safeguarding controls configured; incident response procedures documented</p>
-                    <p style="font-size: 0.85em; color: #666; margin-top: 10px;">Full compliance requires operational implementation and testing.</p>
+                    <h3>NIST SP 800-171A Assessment</h3>
+                    <div class="compliance-status">101/110</div>
+                    <p>Estimated SPRS Score (91.8%)*</p>
+                    <p style="font-size: 0.85em; color: #666; margin-top: 10px;">*Self-assessed using the official DoD Assessment Methodology v1.2.1, September 2026. An estimate, not an independently verified score — several POA&M items remain open and pending resolution. See <a href="#remediation" style="color: #667eea;">2026 Update</a>.</p>
                 </div>
-                <div class="compliance-card">
-                    <h3>CMMC Level 2</h3>
-                    <div class="compliance-status" style="font-size: 1.2em;">Not Assessed</div>
-                    <p>Technical controls deployed; <strong>no C3PAO assessment conducted</strong></p>
-                    <p style="font-size: 0.85em; color: #666; margin-top: 10px;">CMMC certification requires formal third-party assessment.</p>
-                </div>
+            </div>
+
+            <div style="background: #fff3cd; border-left: 5px solid #ffc107; padding: 20px; margin-bottom: 30px; border-radius: 4px;">
+                <p style="margin: 0; color: #856404; font-size: 1.05em; line-height: 1.7;">
+                    <strong>A note on self-assessment:</strong> The Department of War's move to permit self-assessment for CMMC Level 2 is a potential trap for anyone who takes a technical score at face value without doing the deeper work. A clean OpenSCAP number — or even an honest SPRS self-assessment score — says nothing about whether the organizational and documentary side of the assessment (policies actually followed, evidence actually collected, personnel actually trained) was examined with the same rigor. Self-assessment removes the independent check; it does not remove the requirement for that rigor.
+                </p>
             </div>
 
             <div class="controls-section">
@@ -369,42 +412,29 @@
         </div>
     </section>
 
-    <!-- AI Infrastructure Section - Revised -->
+    <!-- AI Infrastructure Section - Simplified: points to DIWAI.org, no stale RS1 artifacts -->
     <section id="ai-infrastructure" class="section">
         <div class="container">
             <h2 class="section-title">AI-Assisted System Administration</h2>
 
             <div class="management-intro">
-                <p><strong>January 2026:</strong> AI infrastructure added using Llama 3.3 70B Instruct on Mac Mini M4 Pro. The SysAdmin Agent Dashboard provides natural language system administration capabilities. <strong>Important:</strong> AI tools assist but do not replace cybersecurity expertise. See "AI Competency Paradox" in <a href="#risks-limitations">Risks</a>.</p>
+                <p>AI-assisted system administration is now developed on <strong>Reference System #2, DIWAI.org</strong>, rather than as an add-on here. <strong>Important:</strong> AI tools assist but do not replace cybersecurity expertise. See "AI Competency Paradox" below.</p>
             </div>
 
-            <div style="text-align: center; margin: 40px 0;">
-                <img src="SysAdmin_Agent_Dashboard.png" alt="SysAdmin Agent Dashboard" style="max-width: 100%; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.3); border: 3px solid #2c3e50;">
-                <p style="margin-top: 15px; color: #666; font-style: italic;">SysAdmin Agent Dashboard - AI assistance for system administration tasks</p>
+            <div style="background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%); padding: 30px; border-radius: 12px; margin: 30px 0; text-align: center;">
+                <h3 style="color: white; font-size: 1.6em; margin-bottom: 15px;">Reference System #2: DIWAI.org</h3>
+                <p style="color: white; font-size: 1.1em; max-width: 800px; margin: 0 auto; line-height: 1.7; opacity: 0.95;">
+                    "Do It With AI" — a single-appliance reference system: a Mac mini paired with a FIPS-validated Rocky Linux 9.7 service VM, consolidating firewall, domain controller, mail, VPN, IDS/IPS, SIEM, and monitoring into one host. AI-assisted system administration continues there as part of an actively maintained reference system, governed by its own policies, SSP, and POA&M.
+                </p>
+                <p style="margin-top: 20px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+                    <a href="diwai.html" style="display: inline-block; padding: 12px 25px; background: white; color: #1a365d; text-decoration: none; border-radius: 6px; font-weight: 600;">Read More About DIWAI</a>
+                    <a href="https://diwai.org" target="_blank" style="display: inline-block; padding: 12px 25px; background: rgba(255,255,255,0.15); color: white; text-decoration: none; border-radius: 6px; font-weight: 600; border: 2px solid white;">Visit diwai.org</a>
+                </p>
             </div>
 
-            <div class="two-column">
-                <div class="card">
-                    <h3>Implementation Details</h3>
-                    <ul>
-                        <li><strong>AI Model:</strong> Llama 3.3 70B Instruct (locally hosted)</li>
-                        <li><strong>Hardware:</strong> Mac Mini M4 Pro, 64GB RAM</li>
-                        <li><strong>Network:</strong> Internal only, TLS-encrypted (port 11443)</li>
-                        <li><strong>Backend:</strong> Flask API with command whitelist</li>
-                        <li><strong>Security:</strong> Human approval required for system changes</li>
-                    </ul>
-                </div>
-
-                <div class="card">
-                    <h3>Capabilities & Limitations</h3>
-                    <ul>
-                        <li><strong>Can:</strong> Analyze logs, suggest troubleshooting steps, answer questions</li>
-                        <li><strong>Can:</strong> Execute whitelisted read-only commands</li>
-                        <li><strong>Cannot:</strong> Replace security expertise or judgment</li>
-                        <li><strong>Cannot:</strong> Guarantee correct or secure recommendations</li>
-                        <li><strong>Requires:</strong> Human review of all suggestions</li>
-                    </ul>
-                </div>
+            <div class="highlight-box">
+                <h3>Ongoing: Automated Compliance Assessment</h3>
+                <p>A parallel effort, developed on DIWAI.org and documented in the project's public repositories, explores using AI to assist with the continuous, evidence-based reassessment work described in the <a href="#remediation" style="color: #667eea;">2026 Update</a> above — rather than only accelerating initial build-out. The goal is the same one this whole project has pursued from the start: automation that produces more honest compliance signal, not just more of it. <a href="automated-compliance.html" style="color: #667eea; font-weight: 600;">Read more about this effort →</a></p>
             </div>
 
             <div style="background: #fff3cd; border-left: 5px solid #ffc107; padding: 20px; margin: 30px 0; border-radius: 4px;">
@@ -413,17 +443,6 @@
                     AI tools can accelerate work for those who already understand what they're doing. For those who don't, AI can produce convincing-looking results that contain subtle errors or security gaps.
                     <strong>AI assistance does not substitute for foundational cybersecurity knowledge.</strong> If you cannot evaluate whether an AI suggestion is correct, you should not implement it.
                 </p>
-            </div>
-
-            <div class="highlight-box">
-                <h3>Why Local AI?</h3>
-                <p>Running AI locally on the internal network provides:</p>
-                <ul>
-                    <li><strong>Data Control:</strong> Queries and responses stay within the environment</li>
-                    <li><strong>No External Dependencies:</strong> Functions without internet connectivity</li>
-                    <li><strong>Cost Structure:</strong> One-time hardware cost vs. ongoing API fees</li>
-                </ul>
-                <p style="margin-top: 15px;"><strong>Trade-offs:</strong> Local models may be less capable than cloud APIs; requires hardware investment; model updates require manual intervention.</p>
             </div>
         </div>
     </section>
@@ -536,7 +555,7 @@
 
             <div class="results-summary">
                 <h3>What We Observed</h3>
-                <p>After several months of development (October 2025 - January 2026), we documented the following observations about building this reference implementation:</p>
+                <p>Across the current development period (October 2025 to October 2026), we documented the following observations about building this reference implementation:</p>
             </div>
 
             <div class="three-column">
@@ -580,7 +599,7 @@
                 <ul>
                     <li><strong>Open-source tools are capable:</strong> Modern open-source security tools can implement required technical controls</li>
                     <li><strong>FIPS compliance adds complexity:</strong> Numerous compatibility issues with FIPS 140-2 mode drove selection of alternate tools and configurations</li>
-                    <li><strong>Documentation is substantial work:</strong> Templates and examples are available on <a href="https://github.com/The-CyberHygiene-Project/cyberhygiene-documentation" target="_blank" style="color: #667eea;">GitHub</a>, and AI tools can help tailor them to expedite implementation</li>
+                    <li><strong>Initial documentation is the easy part; keeping it current is the real benefit of AI:</strong> AI tools and the templates available on <a href="https://github.com/The-CyberHygiene-Project/cyberhygiene-documentation" target="_blank" style="color: #667eea;">GitHub</a> make first-draft documentation straightforward. The harder, ongoing task is updating that documentation correctly as the system changes — every event, rebuild, or configuration change potentially invalidates something already written. That reconciliation work, done continuously rather than as a one-time effort, is where AI assistance has mattered most in practice.</li>
                     <li><strong>Tools generate data, not security:</strong> AI tools included in the reference system pre-process monitoring data, but human analysis and response remain essential</li>
                     <li><strong>AI accelerates but doesn't replace expertise:</strong> Claude and AI-assisted development played a huge role in building this system, but human involvement remained essential to direct, review, and validate the effort</li>
                 </ul>
@@ -606,29 +625,38 @@
     </section>
 
     <!-- Phase II Section - Reframed -->
-    <section class="section" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%); padding: 60px 20px;">
+    <section id="cyber-appliance-project" class="section" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%); padding: 60px 20px;">
         <div class="container">
-            <h2 style="text-align: center; color: white; font-size: 2.2em; margin-bottom: 20px;">Phase II: Exploring Deployment Automation</h2>
-            <p style="text-align: center; color: white; font-size: 1.1em; margin-bottom: 40px; opacity: 0.95;">Investigating whether deployment complexity can be reduced through automation</p>
+            <h2 style="text-align: center; color: white; font-size: 2.2em; margin-bottom: 20px;">The Cyber Appliance Project</h2>
+            <p style="text-align: center; color: white; font-size: 1.1em; margin-bottom: 20px; opacity: 0.95;">A collaborative effort with Jeff, who is providing the hardware, evolving Phase II's scripted-deployment research and the Automated Compliance work described elsewhere on this site into one deployable appliance</p>
+            <p style="text-align: center; color: white; font-size: 1em; margin-bottom: 40px; opacity: 0.85; max-width: 700px; margin-left: auto; margin-right: auto;">A dedicated page for the Cyber Appliance Project will be added here as this work progresses.</p>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1000px; margin: 0 auto;">
-                <div style="background: white; border-radius: 12px; padding: 30px;">
-                    <h3 style="color: #28a745; margin-bottom: 15px;">Research Direction</h3>
-                    <p style="color: #555; line-height: 1.6;">Phase II explores whether scripted deployment can reduce the technical barrier while maintaining security.</p>
-                    <ul style="color: #555; line-height: 1.8; margin-top: 15px;">
-                        <li>Portable demonstration system for educational presentations (Q1 2026)</li>
-                        <li>Testing and assessment of reference implementation (Q2 - Q3 2026)</li>
-                    </ul>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 25px; max-width: 1100px; margin: 0 auto;">
+                <div style="background: white; border-radius: 12px; padding: 25px;">
+                    <h3 style="color: #28a745; margin-bottom: 10px; font-size: 1.15em;">Step 1: Build &amp; Image</h3>
+                    <p style="color: #555; line-height: 1.6; font-size: 0.95em;">Build the test apparatus and install a deployable ISO — the "golden disk" approach to establishing a secure baseline.</p>
                 </div>
+                <div style="background: white; border-radius: 12px; padding: 25px;">
+                    <h3 style="color: #28a745; margin-bottom: 10px; font-size: 1.15em;">Step 2: Replicate &amp; Automate</h3>
+                    <p style="color: #555; line-height: 1.6; font-size: 0.95em;">Replicate the AI server and build out the <a href="automated-compliance.html" style="color: #28a745;">automated compliance engine</a>, extending the diagnose/repair approach already proven on DIWAI.</p>
+                </div>
+                <div style="background: white; border-radius: 12px; padding: 25px;">
+                    <h3 style="color: #28a745; margin-bottom: 10px; font-size: 1.15em;">Step 3: Harden &amp; Test</h3>
+                    <p style="color: #555; line-height: 1.6; font-size: 0.95em;">Harden and test the deployed setup to reach a solid, verifiable SPRS compliance footing — not just a passing scan.</p>
+                </div>
+                <div style="background: white; border-radius: 12px; padding: 25px;">
+                    <h3 style="color: #28a745; margin-bottom: 10px; font-size: 1.15em;">Then: Close the Loop</h3>
+                    <p style="color: #555; line-height: 1.6; font-size: 0.95em;">Identify remaining gaps and train the local AI to help remediate them — the real work this whole effort is building toward.</p>
+                </div>
+            </div>
 
-                <div style="background: white; border-radius: 12px; padding: 30px;">
-                    <h3 style="color: #28a745; margin-bottom: 15px;">Important Caveats</h3>
-                    <ul style="color: #555; line-height: 1.8;">
-                        <li>Automation reduces deployment time, not expertise requirements</li>
-                        <li>Scripted deployment still requires understanding to operate securely</li>
-                        <li>Professional guidance recommended for production use</li>
-                    </ul>
-                </div>
+            <div style="background: white; border-radius: 12px; padding: 30px; max-width: 800px; margin: 30px auto 0;">
+                <h3 style="color: #28a745; margin-bottom: 15px;">Important Caveats</h3>
+                <ul style="color: #555; line-height: 1.8; margin: 0;">
+                    <li>Automation reduces deployment time, not expertise requirements</li>
+                    <li>Scripted deployment still requires understanding to operate securely</li>
+                    <li>Professional guidance recommended for production use</li>
+                </ul>
             </div>
         </div>
     </section>
@@ -846,7 +874,10 @@
                         <li><a href="#risks-limitations"><strong>Risks</strong></a></li>
                         <li><a href="#about">About</a></li>
                         <li><a href="#architecture">Architecture</a></li>
+                        <li><a href="#remediation">2026 Update</a></li>
                         <li><a href="#compliance">Compliance Status</a></li>
+                        <li><a href="diwai.html">DIWAI</a></li>
+                        <li><a href="automated-compliance.html">Automated Compliance</a></li>
                         <li><a href="#contact">Contact</a></li>
                     </ul>
                 </div>

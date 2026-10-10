@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="DIWAI.org (Do It With AI) - Reference System #2 of The CyberHygiene Project, a single-appliance NIST 800-171 research implementation with AI-assisted administration">
+    <meta name="keywords" content="DIWAI, NIST 800-171, CMMC, SecureMac, local AI, AI-assisted administration, compliance, research">
+    <title>DIWAI.org | The CyberHygiene Project</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Important Notice Banner -->
+    <div style="background: linear-gradient(135deg, #f8f4e8 0%, #f5f0e0 100%); padding: 15px 30px; border-bottom: 2px solid #d4a574;">
+        <div class="container">
+            <p style="margin: 0; color: #5d4e37; font-size: 1em; text-align: center; line-height: 1.6;">
+                <strong>Research Reference Implementation</strong> — This page documents a companion reference system within The CyberHygiene Project. See <a href="index.html#risks-limitations" style="color: #8b6914; text-decoration: underline;">limitations</a> on the main project page.
+            </p>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">
+                <h1>DIWAI.org</h1>
+                <p class="tagline">Reference System #2 — "Do It With AI"</p>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#architecture">Architecture</a></li>
+                <li><a href="#local-ai">Local AI Tooling</a></li>
+                <li><a href="#compliance">Compliance Status</a></li>
+                <li><a href="automated-compliance.html">Automated Compliance</a></li>
+                <li><a href="#risks">Risks</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h2>Do It With AI</h2>
+            <h3>A Single-Appliance Reference System for Small-Business CUI Compliance</h3>
+            <p class="hero-subtitle">One Mac mini, one FIPS-validated Rocky Linux service VM, and a fully offline local AI — built and documented live at <a href="https://diwai.org" target="_blank" style="color: #ffe9c7;">diwai.org</a></p>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-number">100/110</span>
+                    <span class="stat-label">Self-Assessed SPRS Score*</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">1</span>
+                    <span class="stat-label">Physical Appliance</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">325</span>
+                    <span class="stat-label">Automated Tests, Local AI Tooling</span>
+                </div>
+            </div>
+            <p style="font-size: 0.85em; color: rgba(255,255,255,0.8); margin-top: 15px;">*As of October 2026, self-assessed. Several POA&amp;M items remain open — see Compliance Status below.</p>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="container">
+            <h2 class="section-title">About This Reference System</h2>
+            <div class="two-column">
+                <div class="column">
+                    <h3>Why a Second Reference System?</h3>
+                    <p>Reference System #1 (dc1, <a href="index.html">cyberinabox.net</a>) proved the underlying research question: an open-source stack, assisted by AI for both construction and empirical NIST 800-171A assessment, can be built and held to live-verified compliance rigor rather than self-attestation alone.</p>
+                    <p>Running dc1 for real also surfaced a clear finding: a full domain-controller architecture (FreeIPA, Kerberos, LDAP, an integrated CA) is <em>over-specified</em> for a system this size — realistically one server and a handful of workstations. DIWAI explores the opposite end of the spectrum: how much of the same control set can be met with one consolidated appliance instead.</p>
+                </div>
+                <div class="column">
+                    <h3>What DIWAI Is</h3>
+                    <ul>
+                        <li>A single-appliance alternative architecture to RS1's multi-service domain controller</li>
+                        <li>A live testbed for AI-assisted system administration with hard technical guardrails</li>
+                        <li>An independent system with its own SSP, POA&amp;M, and SPRS score — not a subset or clone of cyberinabox.net</li>
+                        <li>Documented as it is built, including findings against its own prior claims</li>
+                    </ul>
+                    <h3>What DIWAI Is NOT</h3>
+                    <ul>
+                        <li>A certified or C3PAO-assessed compliant system</li>
+                        <li>A turnkey product — see <a href="index.html#risks-limitations">Risks</a> on the main page</li>
+                        <li>Dependent on cloud AI services — the AI tooling below is fully offline-capable</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Architecture Section -->
+    <section id="architecture" class="section alt-bg">
+        <div class="container">
+            <h2 class="section-title">Architecture</h2>
+            <div class="architecture-overview">
+                <p>DIWAI consolidates firewall, domain services, mail, VPN, IDS/IPS, SIEM, and monitoring onto a single Mac mini M4 Pro host, with a FIPS-validated Rocky Linux 9.7 service VM for the Linux-native half of the stack. The Mac mini hardware was repurposed in April 2026 from Reference System #1's original standalone AI server — see the <a href="index.html#remediation">2026 Update</a> on the main page.</p>
+            </div>
+            <div class="three-column">
+                <div class="card">
+                    <h4>Host (Mac mini M4 Pro)</h4>
+                    <ul>
+                        <li>Boundary router and hypervisor</li>
+                        <li>FileVault full-disk encryption</li>
+                        <li>389 Directory Server (identity, in place of FreeIPA)</li>
+                        <li>Local AI model server (LM Studio)</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>Rocky Linux 9.7 Service VM</h4>
+                    <ul>
+                        <li>FIPS 140-2 cryptographic mode enabled</li>
+                        <li>Wazuh SIEM/XDR, Suricata IDS/IPS, auditd</li>
+                        <li>Mail (Postfix/Dovecot)</li>
+                        <li>CUI document store</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>Governance</h4>
+                    <ul>
+                        <li>Its own independent policy set (DIWAI-*-001 series)</li>
+                        <li>Its own SSP and POA&amp;M, versioned separately from RS1</li>
+                        <li>No shared or inherited controls across systems, even where co-located</li>
+                    </ul>
+                </div>
+            </div>
+            <p style="text-align: center; color: #666; margin-top: 30px;">Technical configuration, policies, and the full change-record history are documented in the <a href="https://github.com/The-CyberHygiene-Project/diwai" target="_blank" style="color: #667eea; text-decoration: underline;">diwai</a> and <a href="https://github.com/The-CyberHygiene-Project/Cyberinabox-PhaseIV" target="_blank" style="color: #667eea; text-decoration: underline;">Cyberinabox-PhaseIV</a> GitHub repositories.</p>
+        </div>
+    </section>
+
+    <!-- Local AI Tooling Section -->
+    <section id="local-ai" class="section">
+        <div class="container">
+            <h2 class="section-title">Local AI Tooling, With Hard Guardrails</h2>
+            <div class="management-intro">
+                <p>DIWAI's AI assistance runs entirely offline through LM Studio as a single local model server — no cloud dependency. The interesting engineering is less the AI itself and more the guardrails placed around what it's allowed to do unsupervised.</p>
+            </div>
+            <div class="two-column">
+                <div class="card">
+                    <h3>Repair Library</h3>
+                    <p>A fixed catalog of pre-approved repairs. A repair runs only if the ISSO has approved its <em>exact</em> code using a hardware key (YubiKey, PIN + touch) — showing the planned change, requiring a typed confirmation, keeping a backup, and supporting undo. Any code change invalidates the approval; re-approval is required after every reinstall.</p>
+                </div>
+                <div class="card">
+                    <h3>Aider, On a Leash</h3>
+                    <p>The coding-assistant tool used to draft configuration changes runs through a launcher that refuses project-level settings capable of running code without approval. A model-proposed command never executes without a typed "yes" — verified live across 8 of 8 adversarial checks, including a planted "ignore your instructions" prompt that was ignored 3 for 3.</p>
+                </div>
+            </div>
+            <p style="text-align: center; margin: 20px 0;"><a href="automated-compliance.html" style="color: #667eea; font-weight: 600; text-decoration: underline;">Read about the Automated Compliance effort →</a></p>
+
+            <div class="highlight-box">
+                <h3>Verification, Not Just Claims</h3>
+                <p>The October 2026 build of this tooling was tested, not just asserted: <strong>325 automated tests passing</strong>, test-first (each test observed to fail before the fix was written), and an independent code review before install that found 1 critical and 7 important findings — all fixed, each with its own failing-first test. The critical finding: an early version of <code>undo</code> would have accepted any folder as a valid "run," which could have let an approved repair's undo write unapproved content with no typed confirmation. It was fixed before release.</p>
+                <p style="margin-top: 15px;">This project has also turned the same scrutiny on its own prior work: a documented verification sweep of earlier POA&amp;M closures found several that had been marked resolved on the strength of evidence that didn't actually support the conclusion — the same class of defect the assessment exists to catch in general. Those findings were corrected in the record, not quietly dropped.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Compliance Status Section -->
+    <section id="compliance" class="section alt-bg">
+        <div class="container">
+            <h2 class="section-title">Compliance Status</h2>
+            <div style="background: #fff3cd; border-left: 5px solid #ffc107; padding: 20px; margin-bottom: 30px; border-radius: 4px;">
+                <p style="margin: 0; color: #856404; font-size: 1.05em;">
+                    <strong>Important Context:</strong> DIWAI maintains its own independent SSP, POA&amp;M, and SPRS score — not a subset of cyberinabox.net's. The figure below is a self-assessment using the official DoD Assessment Methodology, not an independently verified or C3PAO-assessed score.
+                </p>
+                <p style="margin: 15px 0 0 0; color: #856404; font-size: 1.05em;">
+                    <strong>Dual-revision hardening in progress:</strong> the score below is scored against <strong>NIST SP 800-171 Rev 2</strong> — the current Department of War (DoW) requirement. DIWAI is simultaneously being hardened toward <strong>Rev 3</strong>, which governs other federal agencies including GSA, with draft SSP and policy updates for the new Rev 3 control families already underway.
+                </p>
+            </div>
+            <div class="compliance-grid">
+                <div class="compliance-card">
+                    <h3>NIST SP 800-171A Assessment</h3>
+                    <div class="compliance-status">100/110</div>
+                    <p>Estimated SPRS Score (90.9%)*</p>
+                    <p style="font-size: 0.85em; color: #666; margin-top: 10px;">*Self-assessed, October 2026. Four open deductions remain pending resolution (see below).</p>
+                </div>
+                <div class="compliance-card">
+                    <h3>Open POA&amp;M Items</h3>
+                    <div class="compliance-status" style="font-size: 1.2em;">4 Scored Deductions</div>
+                    <p>MFA coverage (3.5.3), network segmentation (3.13.5), two smaller credential-policy gaps</p>
+                    <p style="font-size: 0.85em; color: #666; margin-top: 10px;">Tracked openly in the public POA&amp;M, not omitted from the count.</p>
+                </div>
+                <div class="compliance-card">
+                    <h3>Assessment History</h3>
+                    <div class="compliance-status" style="font-size: 1.2em;">63 Items Logged</div>
+                    <p>Total POA&amp;M items ever opened against this system, most resolved and verified live</p>
+                    <p style="font-size: 0.85em; color: #666; margin-top: 10px;">A long paper trail is treated as a feature of honest tracking, not a flaw.</p>
+                </div>
+            </div>
+            <div class="highlight-box">
+                <h3>Governance Documentation</h3>
+                <p>Policy documents cover ten NIST 800-171 control families (Audit &amp; Accountability, Awareness &amp; Training, Configuration Management, Identification &amp; Authentication, Incident Response, Media Protection, Personnel Security, Risk Assessment, System &amp; Communications Protection, System &amp; Information Integrity), each mapped to specific requirements in a public control-to-policy quick reference. The current SSP, POA&amp;M, SBOM, and change records are maintained in the <a href="https://github.com/The-CyberHygiene-Project/diwai" target="_blank" style="color: #667eea;">diwai</a> repository.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Risks Section -->
+    <section id="risks" class="section" style="background: linear-gradient(135deg, #4a5568 0%, #5a6778 100%); padding: 60px 20px;">
+        <div class="container">
+            <h2 style="text-align: center; color: white; font-size: 2.5em; margin-bottom: 15px;">Risks</h2>
+            <p style="text-align: center; color: white; font-size: 1.2em; margin-bottom: 40px; opacity: 0.95;">The same cautions on the main project page apply here, plus one specific to AI tooling</p>
+            <div style="background: white; border-radius: 12px; padding: 40px; max-width: 800px; margin: 0 auto;">
+                <ul style="color: #555; line-height: 2.2; font-size: 1.1em; margin: 0; padding-left: 25px;">
+                    <li><strong>A single appliance is also a single point of failure</strong> — the host is simultaneously boundary router, hypervisor, and CUI document store</li>
+                    <li><strong>Guardrails reduce risk, they don't eliminate it</strong> — the repair library's own pre-release review found a critical defect; later ones may exist</li>
+                    <li><strong>Self-assessment is not certification</strong> — 100/110 is this project's own number, not a C3PAO's</li>
+                    <li><strong>AI drafting still needs expert review</strong> — in testing, AI-drafted compliance text consistently failed to cite a fitting assessment objective without human review</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>DIWAI.org</h4>
+                    <p>Reference System #2 of The CyberHygiene Project — a single-appliance NIST 800-171 research implementation with AI-assisted administration.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Main Project Page</a></li>
+                        <li><a href="#architecture">Architecture</a></li>
+                        <li><a href="#local-ai">Local AI Tooling</a></li>
+                        <li><a href="#compliance">Compliance Status</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Repositories</h4>
+                    <ul>
+                        <li><a href="https://github.com/The-CyberHygiene-Project/diwai" target="_blank">diwai (governance)</a></li>
+                        <li><a href="https://github.com/The-CyberHygiene-Project/Cyberinabox-PhaseIV" target="_blank">Cyberinabox-PhaseIV (build)</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Donald E. Shannon LLC dba The Contract Coach. All rights reserved.</p>
+                <p class="disclaimer"><strong>DISCLAIMER:</strong> This page documents an academic research project and reference implementation. Self-assessment results demonstrate technical control configuration at specific points in time but do not constitute CMMC certification, third-party validation, operational security effectiveness, or legal compliance. <strong>The author does not provide cybersecurity consulting services.</strong> Organizations should engage qualified professionals before attempting compliance implementations.</p>
+                <p style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.2); font-size: 0.85em; opacity: 0.8;">
+                    Documentation and website development assisted by
+                    <a href="https://claude.ai" target="_blank" style="color: #d4a574; text-decoration: none;">Claude</a>
+                    by
+                    <a href="https://anthropic.com" target="_blank" style="color: #d4a574; text-decoration: none;">Anthropic</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
