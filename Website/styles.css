@@ -78,6 +78,19 @@ nav {
     padding: 0 var(--spacing-md);
 }
 
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.logo-mark {
+    height: 50px;
+    width: 50px;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
 .logo h1 {
     font-size: 1.8rem;
     font-weight: 700;
