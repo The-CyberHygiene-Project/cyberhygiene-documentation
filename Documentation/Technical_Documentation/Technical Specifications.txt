@@ -10,7 +10,7 @@ This document specifies a complete network architecture for organizations handli
 
 2. System Architecture Overview
 2.1 Network Topology
-Internet IP = 96.72.6.225 FQDN = cyberinabox.net
+Internet IP = [public IP withheld] FQDN = cyberinabox.net
     |
 [Netgate 2100 - pfSense + Suricata]
     |

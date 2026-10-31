@@ -459,7 +459,7 @@ A diagram of a network AI-generated content may be incorrect.
 
 ### 3.3 Network Topology
 
-    Internet (96.72.6.225)
+    Internet ([public IP withheld])
         ↓
     Netgate 2100 pfSense (192.168.1.1)
         ↓

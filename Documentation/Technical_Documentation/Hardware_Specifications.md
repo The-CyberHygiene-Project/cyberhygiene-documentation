@@ -273,7 +273,7 @@
 
 **Model:** Netgate 2100 pfSense Appliance
 **OS:** pfSense (FreeBSD-based)
-**WAN:** 96.72.6.225 (public IP)
+**WAN:** [public IP withheld] (public IP)
 **LAN:** 192.168.1.1/24
 
 **Specifications:**

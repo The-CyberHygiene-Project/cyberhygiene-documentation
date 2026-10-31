@@ -290,7 +290,7 @@ This document provides comprehensive technical specifications for The Contract C
 
 **Model:** Netgate 2100 pfSense Appliance
 **OS:** pfSense (FreeBSD-based)
-**WAN:** 96.72.6.225 (public IP)
+**WAN:** [public IP withheld] (public IP)
 **LAN:** 192.168.1.1/24
 
 **Specifications:**
@@ -1035,7 +1035,7 @@ This document provides comprehensive technical specifications for The Contract C
 
 ### WAN Connection
 
-**Public IP:** 96.72.6.225
+**Public IP:** [public IP withheld]
 **ISP:** (ISP details)
 **Bandwidth:** (Connection speed)
 **NAT:** Configured on pfSense (192.168.1.1)
@@ -1748,7 +1748,7 @@ FIPS mode is enabled.
                           INTERNET
                               |
                     [Netgate 2100 pfSense]
-                    (96.72.6.225 WAN)
+                    ([public IP withheld] WAN)
                     (192.168.1.1 LAN)
                               |
                   -------------------------
